@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiona & Cody | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #d4b8c7;
+            --secondary-color: #f8f5f7;
+            --accent-color: #9d7989;
+            --text-color: #4a4a4a;
+            --light-text: #ffffff;
+            --dark-overlay: rgba(0, 0, 0, 0.5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 400;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background-image: url('https://cvws.icloud-content.com/S/Adq648f_niwrJlRlspacy4PSHH8P/Fiona-1.JPG?o=Ao3H-jSZ9H67jS6-2qTxpp3ERZJhzW5zJzD0K-U68Him&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogAMVbFLY9B8QsrYoqp7kFAGBLjnuO0DXrXxDnFhYK83ESZxDFnNin3TIYxbPrrN0yIgEAUgTSHH8PaiZqSpFNEccO3teKRCZqbEplMVmxPMIFlQZo4uwaW-KwnyJVh-4d9nImVoAlVBDGDPq_El3nHlopk3WP3UCTT7a27A69y-b8qwUXlnJ89sA&e=1743045450&r=3181d1bb-b059-49a9-937d-c0e6823c0d03-2&s=oZ0WzWyNqL1F7UWM3YB-fa7-Mk0');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .hero-btn:hover {
+            background-color: transparent;
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Categories Section */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .category-card {
+            position: relative;
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, var(--dark-overlay), transparent);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover .category-overlay {
+            padding-bottom: 40px;
+        }
+        
+        .category-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .category-description {
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover .category-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .view-btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease 0.1s;
+        }
+        
+        .category-card:hover .view-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Quote Section */
+        .quote-section {
+            background-color: var(--primary-color);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+            margin: 80px 0;
+        }
+        
+        .quote {
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-style: italic;
+            line-height: 1.4;
+        }
+        
+        .quote-author {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+        
+        /* Recent Memories */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .memory-item {
+            position: relative;
+            height: 250px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .memory-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .memory-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .memory-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .memory-item:hover .memory-overlay {
+            opacity: 1;
+        }
+        
+        .memory-icon {
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .view-all-btn {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            text-align: center;
+            background-color: transparent;
+            color: var(--accent-color);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .view-all-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-text {
+            margin-bottom: 30px;
+            font-weight: 300;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80%;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border: 5px solid white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--primary-color);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 20px;
+        }
+        
+        .lightbox-nav button {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .lightbox-nav button:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 250px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                gap: 20px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1000;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .quote {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="header-container">
+            <a href="home.html" class="logo">Fiona & Cody</a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="nav-links" id="navLinks">
+                <a href="home.html" class="active">Home</a>
+                <a href="photos.html?auth=true">Photos</a>
+                <a href="videos.html?auth=true">Videos</a>
+                <a href="honeymoon.html?auth=true">Honeymoon</a>
+                <a href="index.html">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Our Wedding Journey</h1>
+            <p>A collection of our most precious moments together</p>
+            <a href="#categories" class="hero-btn">Explore Memories</a>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section id="categories">
+            <h2 class="section-title">Our Memories</h2>
+            
+            <div class="categories">
+                <div class="category-card">
+                    <img src="https://cvws.icloud-content.com/S/AcWF4r4WrBZoWcxv59BhBUFtHUX8/Reception-284.jpg?o=AiIwnQNC1f_mVXyNiOtjbWGk8Uf1fpALRtkVEnRsEo7X&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogiBlDpC4AYTdvy6-4FpCyUY3hsNjXB8nFkNMAVPu8YfESZxC57N2n3TIYuYPxrN0yIgEAUgRtHUX8aiafOGsTX9CVAYfjSj_iExD5u0ZuNYNiQ4zeFwXLz7A6PIWZ1dTptHImndv9Sv2uSQ8rRWGgvS8R_pA3zSYJW0TYqOUxfEYGeN7zrr6TPWc&e=1743045542&r=e7ce393d-0d3f-4afd-9755-56b215c05093-6&s=ByCWZc8a2xxkfy0Ghk7MGDxhNqc" alt="Wedding Photos">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Wedding Photos</h3>
+                        <p class="category-description">Beautiful moments captured on our special day.</p>
+                        <a href="photos.html?auth=true" class="view-btn">View Gallery</a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <img src="https://cvws.icloud-content.com/S/AaEC_Tm4d7JwrNjRPfJoQsO9O972/Reception-347.jpg?o=AssfnSwKwrBUQ_2NzQ-nKObX1f5Z6p5Z-wFtH6Eb4Mou&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAog0ppzAhzXtjUKkQSXM0ouN0_WGlpV3VE95qU6eOMBb0ISZxCk4eOn3TIYpPj2rN0yIgEAUgS9O972aiYUSZvgXgRR4BoRj5pCT-8lAh1IcghPh1VjaYPPlA34G1nY9QEzvHIm1vc037gGe9V3IY4gwFFqfl-Z_tnctcVR_iBLRuBEfOtIizAiRoM&e=1743045639&r=1c2e6bce-96d9-4b80-9e55-fa12a95cf962-2&s=HWBDszJkZLaKfzg84tq0mtruz48" alt="Wedding Videos">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Wedding Videos</h3>
+                        <p class="category-description">Relive the magic through our wedding films.</p>
+                        <a href="videos.html?auth=true" class="view-btn">Watch Videos</a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <img src="https://cvws.icloud-content.com/S/ASVuAnB6dvTaHbxxnjoxuv9zU1hS/Portraits-10.jpg?o=AocXkM_uHt3zmfQK4yGs-Ic-Dgd45010j8S1zFQ48p9I&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogjUkaxtC0ULHPCSxV-mlHLp5oy5rWd7YxZOH76FWfSWMSZxDms-Wn3TIY5sr4rN0yIgEAUgRzU1hSaiZNpFwK6Kqmiq2uc1fQbo8WVCp3JGTO0fgsEOMena0lbp6OY9Hs2XImODqF66F6fjWnc6ScYqB15dI8xrOpB1EFhpZU1WLzJKZEK3qSV3I&e=1743045666&r=8acf21e4-f0a5-4c12-adba-a3d0e8afe629-6&s=BcPJOLwxmvP-dxPylWUWBPa4LfA" alt="Honeymoon">
+                    <div class="category-overlay">
+                        <h3 class="category-title">Honeymoon</h3>
+                        <p class="category-description">Adventures from our romantic getaway.</p>
+                        <a href="honeymoon.html?auth=true" class="view-btn">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="quote-section">
+            <div class="quote">"Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day."</div>
+            <div class="quote-author">— Unknown</div>
+        </section>
+        
+        <section id="recent-memories">
+            <h2 class="section-title">Recent Memories</h2>
+            
+            <div class="memories-grid">
+                <div class="memory-item" onclick="openLightbox(0)">
+                    <img src="https://cvws.icloud-content.com/S/ATiwPoZS9y976L0quFSJHarL3nFi/Details-23.jpg?o=AjsCzLnNkdEbPFw0futZ_0Fmtc5fXiungy_eSJqkSAbY&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogmpts5edFJHYOTPiBJTd3cx24xWJylvEq73vbvU4xU3ISZxDqs-Wn3TIY6sr4rN0yIgEAUgTL3nFiaiYtFXkCyIuB0HXT7QebXfUloZZiAJJj4tzTgrRgruoiIN5or-4AUnImdHdJHpJXv3ifbFfpYAnJZvz44-aH1vzEOKwi7GWhAuWV7XSwZK0&e=1743045666&r=8acf21e4-f0a5-4c12-adba-a3d0e8afe629-48&s=B4lU2tnbptXbo1dMKU0ax9Kxzfw" alt="Memory 1">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus memory-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="memory-item" onclick="openLightbox(1)">
+                    <img src="https://cvws.icloud-content.com/S/AW4iWrd_RcsSq-VfN1p5gYWRMO_c/Ceremony-83.jpg?o=AsU3b94Gq_bWlskHfFct81lJnw8oKm3N1HkEbPX6PG2h&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAog6LZC3zJcQFMqPwlTIXfbqunXrgHN6VGaXwVYzl8jZksSZxConoGo3TIYqLWUrd0yIgEAUgSRMO_caiZqy9kLMk7Bw6SdUBl0yQnd42o2VXQeHfLjbshBTKlzqjbAe_OKUXImhPZz7wkQp7aqURW92rv1EG4qkyWmIHCKm1JRSDy8P7E-aTozQms&e=1743046122&r=e5f06f42-d946-4c8e-9fb4-f753ebc28024-23&s=Exa3y6JJrtWEGDWS9q1v2TvPtjI" alt="Memory 2">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus memory-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="memory-item" onclick="openLightbox(2)">
+                    <img src="https://cvws.icloud-content.com/S/AYi_aE76ciylTMt5xJ6dacyfh1YG/Ceremony-89.jpg?o=AkNoVdErYi_grrSR46TS7wsL77P5D6yJQJfOx2me5TTD&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogSMspPJu_KaXE-naiQRB4Gap0wVEkZTbpDXJu08E-QqESZxConoGo3TIYqLWUrd0yIgEAUgSfh1YGaiZjF7v3U6pklEv8i49ElZIZ470jheE_ihIcLyR5idMvwSSGbqULDnImftCUEKyxkWRjJLmuTWKPmCucEoaLzgCgdRXQJZIo4AZrqyrjwNc&e=1743046122&r=e5f06f42-d946-4c8e-9fb4-f753ebc28024-22&s=0kjLvNtaS_258cOEQnFX1-QALjE" alt="Memory 3">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus memory-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="memory-item" onclick="openLightbox(3)">
+                    <img src="https://cvws.icloud-content.com/S/AfUZpjjwidJxiV2TGH66C8gOImLx/Reception-35.jpg?o=ApwIZEL6CAj-5S-N-at9QIqBAoE1_zNbwG27GrjnwESz&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogYARBJJtLcx6o_jh2fwcpPCAcAG0M0G4DJWCXHDEdtgISZxDUw9in3TIY1NrrrN0yIgEAUgQOImLxaiajjywXw2gpvoqP9CCRmpKKkuz-fso3KKTGhIUMAvL4shmrPqoPenImr6u7S9l9ADVDF3fTb3hOmcVwIClZ7ipGW3nTB6oLw2U5nba9w_0&e=1743045455&r=66cbfbbf-0917-4c42-80f0-2a1673537a4f-46&s=Rw3Gf46l13nXVy81gKiq1zu35MQ" alt="Memory 4">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus memory-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="memory-item" onclick="openLightbox(4)">
+                    <img src="https://cvws.icloud-content.com/S/ARwmd-XQD4zBpm8fQthREhf2Alp9/Reception-83.jpg?o=AlfNJ5GiUep3f2cKzU-J5nRSZ89pkLmQ9gIs5gzsNUMn&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogk0-pdttDyQgI6wu739wzpzEnXhNmsaV35JI_LBX2FZkSZxCs1Nun3TIYrOvurN0yIgEAUgT2Alp9aibLgv1QJoj2L8EWDa8FCvsnUhQcVhWR2EU9xdBM6OdR6vyAsIuANHImNiH8AKTAWJETtrVtB7M1dggs2WjYBvD7MGSGyVZDxawbZpI9wg8&e=1743045506&r=13e02acb-d94e-4161-ac15-bc09d28c99e0-15&s=JZWTqUWW37wiD7xaVP3g2jCorQ4" alt="Memory 5">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus memory-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="memory-item" onclick="openLightbox(5)">
+                    <img src="https://cvws.icloud-content.com/S/AVIepJvMUbz8s2Tbc9X1okQWk6zv/Reception-110.jpg?o=AjQ7CTvK_-tSs09RChIvrYWPa-0zXIfEycAx0vM97zCG&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogpWb9mx3VBJUNWn0QuaVcaavW4cfZOvsMXruQMylvZVASZxCBgtyn3TIYgZnvrN0yIgEAUgQWk6zvaibGj9hZAssT5l83OzH0hm2OX9vwQXnfXvsArx3WjKhlrcpJsWuMmXImTp1OS4M3BWzD3fAWi1H_hvS7g2O1StMfXmt8JWIVo6pK4fSRGi8&e=1743045512&r=2100d3b5-9a5c-41e2-ae36-209d9e8dafc3-20&s=6s6IBUTosgYK9NUli70M5r1_nAM" alt="Memory 6">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus memory-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="memory-item" onclick="openLightbox(6)">
+                    <img src="https://cvws.icloud-content.com/S/AeFtJHJJ_FDoi1_C81EXkVhWp3oR/Details-82.jpg?o=AqmojWbD65cbLVGo7SMOQGCR42gvXyK5uN0ZWH_E76g1&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogTTf9ZoBWPKoIVy-siYCLTkgKgTGR-TEhWLbC21HSgeYSZxCnlJKo3TIYp6ulrd0yIgEAUgRWp3oRaiZxybGulMI9co_a_L_2gvgFTqLFRT914ywgIBIuY5Qyon5pxOmNhXIm27Kwnciy8otEHXJoJ0_S9W-QDp6CXcfqGRzyKL7eA58xIgkWk00&e=1743046399&r=908cd4d3-c98f-452c-9328-9c2acd2ea17b-9&s=SP4LzkN3DdcZHbxQZx7I63filXQ" alt="Memory 7">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus memory-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="memory-item" onclick="openLightbox(7)">
+                    <img src="https://cvws.icloud-content.com/S/AYcYRoRjBEc4vAP_35s_Yzre_6C0/Portraits-61.jpg?o=AqpGw2xxK6xUSrySYqEvNsrN5Xdv9fkHtpD4PLaLzc7W&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogG_yXVGUxArHgwRApPHM5y3jWghAv-uNBX45S9tiHNUMSZxDzhoWo3TIY852Yrd0yIgEAUgTe_6C0aiY7pW4NEE4wIi7emfB8sVXG5B5lH9Co1pP5Vxo6SF1gP9RlKlXX3XImm0WhkM1uzswrW5O8c7fcWBjVH_zbLHOUcsFNIkqdEdzznwLvKr8&e=1743046184&r=38e72eb5-1c28-4d28-8f57-6528b8e122be-9&s=EruhfCGdxV3cCMVEPa2Ji6mvy7o" alt="Memory 8">
+                    <div class="memory-overlay">
+                        <i class="fas fa-search-plus memory-icon"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="photos.html?auth=true" class="view-all-btn">View All Photos</a>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Fiona & Cody</div>
+            <p class="footer-text">Thank you for visiting our wedding memories website.</p>
+            
+            <div class="footer-links">
+                <a href="home.html" class="active">Home</a>
+                <a href="photos.html?auth=true">Photos</a>
+                <a href="videos.html?auth=true">Videos</a>
+                <a href="honeymoon.html?auth=true">Honeymoon</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+            
+            <p class="copyright">&copy; 2023 Our Wedding Memories. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <img src="" alt="Lightbox Image" class="lightbox-img" id="lightboxImg">
+            <div class="lightbox-nav">
+                <button id="prevBtn" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+                <button id="nextBtn" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Change icon based on menu state
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close menu when clicking a link (mobile)
+        const navLinksItems = navLinks.querySelectorAll('a');
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+        
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        // Sample images for lightbox
+        const images = [
+            'https://cvws.icloud-content.com/S/ATiwPoZS9y976L0quFSJHarL3nFi/Details-23.jpg?o=AjsCzLnNkdEbPFw0futZ_0Fmtc5fXiungy_eSJqkSAbY&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogmpts5edFJHYOTPiBJTd3cx24xWJylvEq73vbvU4xU3ISZxDqs-Wn3TIY6sr4rN0yIgEAUgTL3nFiaiYtFXkCyIuB0HXT7QebXfUloZZiAJJj4tzTgrRgruoiIN5or-4AUnImdHdJHpJXv3ifbFfpYAnJZvz44-aH1vzEOKwi7GWhAuWV7XSwZK0&e=1743045666&r=8acf21e4-f0a5-4c12-adba-a3d0e8afe629-48&s=B4lU2tnbptXbo1dMKU0ax9Kxzfw',
+            'https://cvws.icloud-content.com/S/AW4iWrd_RcsSq-VfN1p5gYWRMO_c/Ceremony-83.jpg?o=AsU3b94Gq_bWlskHfFct81lJnw8oKm3N1HkEbPX6PG2h&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAog6LZC3zJcQFMqPwlTIXfbqunXrgHN6VGaXwVYzl8jZksSZxConoGo3TIYqLWUrd0yIgEAUgSRMO_caiZqy9kLMk7Bw6SdUBl0yQnd42o2VXQeHfLjbshBTKlzqjbAe_OKUXImhPZz7wkQp7aqURW92rv1EG4qkyWmIHCKm1JRSDy8P7E-aTozQms&e=1743046122&r=e5f06f42-d946-4c8e-9fb4-f753ebc28024-23&s=Exa3y6JJrtWEGDWS9q1v2TvPtjI',
+            'https://cvws.icloud-content.com/S/AYi_aE76ciylTMt5xJ6dacyfh1YG/Ceremony-89.jpg?o=AkNoVdErYi_grrSR46TS7wsL77P5D6yJQJfOx2me5TTD&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogSMspPJu_KaXE-naiQRB4Gap0wVEkZTbpDXJu08E-QqESZxConoGo3TIYqLWUrd0yIgEAUgSfh1YGaiZjF7v3U6pklEv8i49ElZIZ470jheE_ihIcLyR5idMvwSSGbqULDnImftCUEKyxkWRjJLmuTWKPmCucEoaLzgCgdRXQJZIo4AZrqyrjwNc&e=1743046122&r=e5f06f42-d946-4c8e-9fb4-f753ebc28024-22&s=0kjLvNtaS_258cOEQnFX1-QALjE',
+            'https://cvws.icloud-content.com/S/AfUZpjjwidJxiV2TGH66C8gOImLx/Reception-35.jpg?o=ApwIZEL6CAj-5S-N-at9QIqBAoE1_zNbwG27GrjnwESz&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogYARBJJtLcx6o_jh2fwcpPCAcAG0M0G4DJWCXHDEdtgISZxDUw9in3TIY1NrrrN0yIgEAUgQOImLxaiajjywXw2gpvoqP9CCRmpKKkuz-fso3KKTGhIUMAvL4shmrPqoPenImr6u7S9l9ADVDF3fTb3hOmcVwIClZ7ipGW3nTB6oLw2U5nba9w_0&e=1743045455&r=66cbfbbf-0917-4c42-80f0-2a1673537a4f-46&s=Rw3Gf46l13nXVy81gKiq1zu35MQ',
+            'https://cvws.icloud-content.com/S/ARwmd-XQD4zBpm8fQthREhf2Alp9/Reception-83.jpg?o=AlfNJ5GiUep3f2cKzU-J5nRSZ89pkLmQ9gIs5gzsNUMn&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogk0-pdttDyQgI6wu739wzpzEnXhNmsaV35JI_LBX2FZkSZxCs1Nun3TIYrOvurN0yIgEAUgT2Alp9aibLgv1QJoj2L8EWDa8FCvsnUhQcVhWR2EU9xdBM6OdR6vyAsIuANHImNiH8AKTAWJETtrVtB7M1dggs2WjYBvD7MGSGyVZDxawbZpI9wg8&e=1743045506&r=13e02acb-d94e-4161-ac15-bc09d28c99e0-15&s=JZWTqUWW37wiD7xaVP3g2jCorQ4',
+            'https://cvws.icloud-content.com/S/AVIepJvMUbz8s2Tbc9X1okQWk6zv/Reception-110.jpg?o=AjQ7CTvK_-tSs09RChIvrYWPa-0zXIfEycAx0vM97zCG&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogpWb9mx3VBJUNWn0QuaVcaavW4cfZOvsMXruQMylvZVASZxCBgtyn3TIYgZnvrN0yIgEAUgQWk6zvaibGj9hZAssT5l83OzH0hm2OX9vwQXnfXvsArx3WjKhlrcpJsWuMmXImTp1OS4M3BWzD3fAWi1H_hvS7g2O1StMfXmt8JWIVo6pK4fSRGi8&e=1743045512&r=2100d3b5-9a5c-41e2-ae36-209d9e8dafc3-20&s=6s6IBUTosgYK9NUli70M5r1_nAM',
+            'https://cvws.icloud-content.com/S/AeFtJHJJ_FDoi1_C81EXkVhWp3oR/Details-82.jpg?o=AqmojWbD65cbLVGo7SMOQGCR42gvXyK5uN0ZWH_E76g1&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogTTf9ZoBWPKoIVy-siYCLTkgKgTGR-TEhWLbC21HSgeYSZxCnlJKo3TIYp6ulrd0yIgEAUgRWp3oRaiZxybGulMI9co_a_L_2gvgFTqLFRT914ywgIBIuY5Qyon5pxOmNhXIm27Kwnciy8otEHXJoJ0_S9W-QDp6CXcfqGRzyKL7eA58xIgkWk00&e=1743046399&r=908cd4d3-c98f-452c-9328-9c2acd2ea17b-9&s=SP4LzkN3DdcZHbxQZx7I63filXQ',
+            'https://cvws.icloud-content.com/S/AYcYRoRjBEc4vAP_35s_Yzre_6C0/Portraits-61.jpg?o=AqpGw2xxK6xUSrySYqEvNsrN5Xdv9fkHtpD4PLaLzc7W&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogG_yXVGUxArHgwRApPHM5y3jWghAv-uNBX45S9tiHNUMSZxDzhoWo3TIY852Yrd0yIgEAUgTe_6C0aiY7pW4NEE4wIi7emfB8sVXG5B5lH9Co1pP5Vxo6SF1gP9RlKlXX3XImm0WhkM1uzswrW5O8c7fcWBjVH_zbLHOUcsFNIkqdEdzznwLvKr8&e=1743046184&r=38e72eb5-1c28-4d28-8f57-6528b8e122be-9&s=EruhfCGdxV3cCMVEPa2Ji6mvy7o'
+        ];
+        
+        let currentImageIndex = 0;
+        
+        function openLightbox(index) {
+            currentImageIndex = index;
+            lightboxImg.src = images[index];
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+        }
+        
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+        
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            lightboxImg.src = images[currentImageIndex];
+        }
+        
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            lightboxImg.src = images[currentImageIndex];
+        }
+        
+        lightboxClose.addEventListener('click', closeLightbox);
+        prevBtn.addEventListener('click', showPrevImage);
+        nextBtn.addEventListener('click', showNextImage);
+        
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                showPrevImage();
+            } else if (e.key === 'ArrowRight') {
+                showNextImage();
+            }
+        });
+        
+        // Check if user is authenticated
+        function checkAuth() {
+            // In a real application, you would implement proper session management
+            // For this demo, we'll use a simple check
+            const params = getQueryParams();
+            if (!params.has('auth')) {
+                // Redirect to login page if not authenticated
+                navigateTo('index');
+            }
+        }
+        
+        // Call checkAuth on page load
+        checkAuth();
+
+        // Add this navigation function
+        function navigateTo(page, options = {}) {
+            let url = page + '.html';
+            if (options.auth) {
+                url += '?auth=true';
+            }
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
