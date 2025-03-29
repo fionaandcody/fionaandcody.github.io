@@ -105,7 +105,7 @@
         
         /* Page Header */
         .page-header {
-            background-image: url('https://cvws.icloud-content.com/S/AaZTjFWvWzplw2Ng8fub8m1nDJkO/IMG_0027.mp4?o=AniYgay1ufcflh0vy0HhbHyeqAJUfIi5ngJZNapuJ3mx&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAoghT9nJLeCk7uDKS4ZvQpj99KKwpK8w2RFnH1e9d1IxHMSZxDH0dio3TIYx-jrrd0yIgEAUgRnDJkOaiaR4UnguUWLNschdgIAdZDBGbo8er5f7gnrlBlibOuzAfnBUSwsLXImXKzVxujN8bVKMbzkcWOgdbFmGNfHzGHfcIH1HxAHuf0bRt_wLiU&e=1743047554&r=44dae6cf-5ca4-4621-bacb-2ac26694ee21-1&s=0m9baSZ6RPQG0s71KnK2Dranu8s&chrome_unique=682184196');
+            background-image: url('Honeymoon/BoraBoraView.png');
             background-size: cover;
             background-position: center;
             height: 50vh;
@@ -189,7 +189,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
-        .video-container iframe {
+        .video-container video {
             position: absolute;
             top: 0;
             left: 0;
@@ -487,12 +487,11 @@
         <section class="video-section">
             <h2 class="section-title">Honeymoon Video</h2>
             <div class="video-container">
-                <iframe 
-                    src="https://cvws.icloud-content.com/S/AaZTjFWvWzplw2Ng8fub8m1nDJkO/IMG_0027.mp4?o=AniYgay1ufcflh0vy0HhbHyeqAJUfIi5ngJZNapuJ3mx&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAoghT9nJLeCk7uDKS4ZvQpj99KKwpK8w2RFnH1e9d1IxHMSZxDH0dio3TIYx-jrrd0yIgEAUgRnDJkOaiaR4UnguUWLNschdgIAdZDBGbo8er5f7gnrlBlibOuzAfnBUSwsLXImXKzVxujN8bVKMbzkcWOgdbFmGNfHzGHfcIH1HxAHuf0bRt_wLiU&e=1743047554&r=44dae6cf-5ca4-4621-bacb-2ac26694ee21-1&s=0m9baSZ6RPQG0s71KnK2Dranu8s&chrome_unique=682184196" 
-                    title="Honeymoon Video" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
+                <video controls preload="metadata" playsinline muted>
+                    <source src="Honeymoon/IMG_0027.mov" type="video/quicktime">
+                    <source src="Honeymoon/IMG_0027.mov" type="video/mp4">
+                    <p>Your browser doesn't support HTML5 video. Here's a <a href="Honeymoon/IMG_0027.mov">link to the video</a> instead.</p>
+                </video>
             </div>
         </section>
         
@@ -548,15 +547,54 @@
         const honeymoonPhotos = [
             {
                 id: 1,
-                src: 'https://cvws.icloud-content.com/S/AdqRNzW8MNM8DdrXy6rSJj0ZR4sq/5FFBE9AD-8863-4C62-AD80-9C34C30D0E60.JPG?o=AtfXCxJAXbKGzpIKn1wRnvUlSDx2r-5HO7eQD4KlI7Ai&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAogphSc6z77nCjCPyPHx8k2wOrZvXxB-ZhULtJ7fBEGE6ISZxDIntio3TIYyLXrrd0yIgEAUgQZR4sqaiYhlk8EDhw5vtQIaZhPGvKI0Yz04kELEPM45f7yDn6qNQVYK_UQJXIm59PINVxivaQUYvTCJkEkLuO6JNP1l2dhMiGNwhD7peylmLck5LI&e=1743047547&r=c4c60f1a-1540-4735-9e4b-d79137528bf0-36&s=32xXJO9THBXGeCd8fAdjKknyGhM',
+                src: 'Honeymoon/BoraBoraView.png',
                 caption: 'Bora Bora Paradise'
             },
             {
                 id: 2,
-                src: 'https://cvws.icloud-content.com/S/AaZTjFWvWzplw2Ng8fub8m1nDJkO/IMG_0027.mp4?o=AniYgay1ufcflh0vy0HhbHyeqAJUfIi5ngJZNapuJ3mx&v=1&z=https%3A%2F%2Fp132-content.icloud.com%3A443&x=1&a=CAoghT9nJLeCk7uDKS4ZvQpj99KKwpK8w2RFnH1e9d1IxHMSZxDH0dio3TIYx-jrrd0yIgEAUgRnDJkOaiaR4UnguUWLNschdgIAdZDBGbo8er5f7gnrlBlibOuzAfnBUSwsLXImXKzVxujN8bVKMbzkcWOgdbFmGNfHzGHfcIH1HxAHuf0bRt_wLiU&e=1743047554&r=44dae6cf-5ca4-4621-bacb-2ac26694ee21-1&s=0m9baSZ6RPQG0s71KnK2Dranu8s&chrome_unique=159537958',
-                caption: 'Overwater Bungalow'
+                src: 'Honeymoon/2CC5A81A-CF61-4B2A-AA3D-14185E7CA098.jpeg',
+                caption: 'Our Hike'
+            },
+            {
+                id: 3,
+                src: 'Honeymoon/F81E69E9-C656-4D85-94AF-26DFD2F6CD6A.png',
+                caption: 'Fiona letting loose'
+            },
+            {
+                id: 4,
+                src: 'Honeymoon/4E9ABC1A-7694-44B1-85FF-ADFF15B5054E.png',
+                caption: 'Crystal Clear Waters'
+            },
+            {
+                id: 5,
+                src: 'Honeymoon/EBBD9D6F-CE3E-48A6-B464-9E005FCF0791.png',
+                caption: 'Paradise Found'
+            },
+            {
+                id: 6,
+                src: 'Honeymoon/C2C39226-C6F0-48CE-AA52-D9C0C671BEF5.png',
+                caption: "We've arrived"
+            },
+            {
+                id: 7,
+                src: 'Honeymoon/431A8F63-FAB4-465C-978A-8542738B78C3.png',
+                caption: 'She barely made it to the plane'
+            },
+            {
+                id: 8,
+                src: 'Honeymoon/09D4FF5C-6E10-4785-915E-AC3DB13B2147.png',
+                caption: 'Tropical Paradise'
+            },
+            {
+                id: 9,
+                src: 'Honeymoon/29D8C121-31CE-439A-B211-F778BD9145B9.png',
+                caption: 'Bora Bora Memories'
+            },
+            {
+                id: 10,
+                src: 'Honeymoon/Snorkel.png',
+                caption: 'Snorkeling'
             }
-            // Add more photos here as needed
         ];
 
         // Load photos into gallery
@@ -583,6 +621,21 @@
 
         // Call loadPhotos when the page loads
         document.addEventListener('DOMContentLoaded', loadPhotos);
+        
+        // Video handling
+        const video = document.querySelector('video');
+        if (video) {
+            video.addEventListener('loadedmetadata', () => {
+                // Unmute the video once it's loaded
+                video.muted = false;
+            });
+            
+            // Handle video errors
+            video.addEventListener('error', (e) => {
+                console.error('Error loading video:', e);
+                alert('There was an error loading the video. Please try refreshing the page.');
+            });
+        }
         
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
