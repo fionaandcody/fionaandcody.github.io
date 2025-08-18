@@ -258,48 +258,59 @@
                 return;
             }
 
-            // List all images in the directory
+            const loading = document.getElementById('loading');
+            loading.classList.add('active');
+
+            // List all images in the directory (remove ./ from paths)
             const images = [
                 '15C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                '47C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                '37C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                '65C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'A64C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'A88C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'BA81C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'BA97C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'C5C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'DACE65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'E55C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'E82C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                'FBFC65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                // Add all image filenames
+                '476D32A1-1253-4045-9592-B5AA3DB32B57.JPG',
+                '374985EF-3B9C-4AC9-B2E6-B56EEE0F06EE.JPG',
+                '656012F2-7594-4505-BDAF-A26528C09DFD.JPG',
+                'A64E9CFE-59F1-4C3F-AAD9-73CF1CB16C70.JPG',
+                'A88E46F2-0A25-4BD6-A1DA-3E308E302830.JPG',
+                'BA81E00B-537E-4B69-8644-7EE53B3CD2BD.JPG',
+                'BA97FC10-819D-4DB3-93C1-DE6776B5C508.JPG',
+                'C5C7F703-F15A-4636-BE95-5289938107A8.JPG',
+                'DACECB87-9B4D-4266-B4EB-1AB905DF7365.JPG',
+                'E55C5316-5DE7-4ED8-9D15-EB38FBC196EA.JPG',
+                'E82B6946-AB67-4DB5-AD62-C24B5F63B340.JPG',
+                'FBF5B3FC-B690-46CD-BDF8-266B1D87E5D9.JPG'
             ];
 
             const photoGrid = document.getElementById('photoGrid');
+            let loadedImages = 0;
 
-            // Load images with error handling
+            // Load images with better error handling
             images.forEach(filename => {
                 const photoItem = document.createElement('div');
                 photoItem.className = 'photo-item';
-                
+                photoGrid.appendChild(photoItem); // Add to grid immediately for layout
+
                 const img = new Image();
-                img.src = filename;
-                img.alt = 'Aulani Vacation Photo';
-                img.loading = 'lazy';
                 
-                // Handle successful load
                 img.onload = () => {
                     photoItem.appendChild(img);
                     photoItem.classList.add('loaded');
+                    loadedImages++;
+                    if (loadedImages === images.length) {
+                        loading.classList.remove('active');
+                    }
                 };
-                
-                // Handle load error
+
                 img.onerror = () => {
                     console.error(`Failed to load image: ${filename}`);
+                    photoItem.style.display = 'none'; // Hide failed items
+                    loadedImages++;
+                    if (loadedImages === images.length) {
+                        loading.classList.remove('active');
+                    }
                 };
-                
-                photoGrid.appendChild(photoItem);
+
+                img.src = filename; // Set src after adding event listeners
+                img.alt = 'Aulani Vacation Photo';
+                img.loading = 'lazy';
+
                 photoItem.addEventListener('click', () => openLightbox(filename));
             });
         });
