@@ -6,36 +6,144 @@
     <title>Fiona & Cody | Aulani 2024</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* Copy styles from index.html above */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        :root {
+            --primary-color: #d4b8c7;
+            --secondary-color: #f8f5f7;
+            --accent-color: #9d7989;
+            --text-color: #4a4a4a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 2rem;
+        }
+
+        .site-header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
             gap: 2rem;
         }
 
-        .photo-grid img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: transform 0.3s;
-            cursor: pointer;
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
         }
 
-        .photo-grid img:hover {
-            transform: scale(1.02);
+        .nav-links a:hover {
+            color: var(--accent-color);
         }
 
-        .back-button {
-            display: inline-block;
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--accent-color);
+            font-size: 3rem;
+            text-align: center;
             margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-block;
             color: var(--accent-color);
             text-decoration: none;
+            margin-bottom: 1.5rem;
             font-weight: 500;
         }
 
-        .back-button:hover {
+        .back-link:hover {
             text-decoration: underline;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .photo-item {
+            aspect-ratio: 3/2;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -55,25 +163,80 @@
     </header>
 
     <main>
-        <a href="../?auth=true" class="back-button">← Back to Vacations</a>
+        <a href="../?auth=true" class="back-link">← Back to Vacations</a>
         <h1>Aulani 2024</h1>
-        <div class="photo-grid">
-            <!-- Replace these with your actual Aulani photos -->
-            <img src="15C65D67-026A-4DF6-81B1-024224D094B7.JPG" alt="Aulani Vacation">
-            <!-- Add more images here -->
-        </div>
+        <div class="photo-grid" id="photoGrid"></div>
     </main>
 
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
     <script>
+        // Auth check
         document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
             if (!params.has('auth')) {
                 window.location.href = '/index.html';
+                return;
+            }
+
+            // Load all images from the current directory
+            loadImages();
+        });
+
+        function loadImages() {
+            const photoGrid = document.getElementById('photoGrid');
+            const imageExtensions = ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'];
+            
+            // List of image filenames in the directory
+            const images = [
+                '15C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                // Add all your image filenames here
+            ];
+
+            images.forEach(filename => {
+                const photoItem = document.createElement('div');
+                photoItem.className = 'photo-item';
+                
+                const img = document.createElement('img');
+                img.src = filename;
+                img.alt = 'Aulani Vacation Photo';
+                
+                photoItem.appendChild(img);
+                photoGrid.appendChild(photoItem);
+
+                // Add click handler for lightbox
+                photoItem.addEventListener('click', () => openLightbox(filename));
+            });
+        }
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+
+        function openLightbox(imageSrc) {
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+        }
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
             }
         });
-    </script>
-</body>
-</html>
+
+        // Close lightbox with escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+            }
         });
     </script>
 </body>
