@@ -5,46 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fiona & Cody | Vacations</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="vacations.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header id="header">
-        <div class="header-container">
-            <a href="/home.html" class="logo">Fiona & Cody</a>
-            <nav class="nav-links" id="navLinks">
+    <div class="site-header">
+        <div class="header-content">
+            <h1><a href="/home.html">Fiona & Cody</a></h1>
+            <div class="nav-links">
                 <a href="/home.html">Home</a>
                 <a href="/photos.html?auth=true">Photos</a>
                 <a href="/videos.html">Videos</a>
                 <a href="/honeymoon.html?auth=true">Honeymoon</a>
                 <a href="/index.html">Logout</a>
-            </nav>
+            </div>
         </div>
-    </header>
+    </div>
 
-    <section class="page-header">
-        <div class="page-header-content">
-            <h1>Our Vacations</h1>
-            <p>Exploring the world together</p>
-        </div>
-    </section>
-
-    <main class="main-content">
-        <!-- Vacation trip list -->
-        <section id="trip-list" class="gallery-grid"></section>
-        
-        <!-- Trip detail -->
-        <section id="trip-detail" hidden>
-            <button id="back-to-trips" class="btn">← Back to All Trips</button>
-            <h2 id="trip-title"></h2>
-            <div id="trip-gallery" class="gallery-grid"></div>
+    <main>
+        <section class="vacations-grid">
+            <h2>Our Vacations</h2>
+            <div class="grid">
+                <a href="Aulani2024/" class="vacation-card">
+                    <div class="image-container">
+                        <img src="Aulani2024/cover.jpg" alt="Aulani 2024">
+                    </div>
+                    <h3>Aulani 2024</h3>
+                </a>
+                <!-- Additional vacation cards will be added here -->
+            </div>
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-logo">Fiona & Cody</div>
-            <p class="footer-text">Thank you for visiting our memories website.</p>
+            <p>Thank you for visiting our memories website.</p>
             <div class="footer-links">
                 <a href="/home.html">Home</a>
                 <a href="/photos.html?auth=true">Photos</a>
@@ -54,12 +48,5 @@
             <p class="copyright">&copy; 2023 Our Memories. All rights reserved.</p>
         </div>
     </footer>
-
-    <div id="lightbox" class="lightbox" hidden>
-        <span id="lightbox-close">&times;</span>
-        <img id="lightbox-img" src="" alt="">
-    </div>
-
-    <script src="vacations.js"></script>
 </body>
 </html>
