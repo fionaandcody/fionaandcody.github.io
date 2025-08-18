@@ -89,13 +89,17 @@
 
         <details open>
           <summary>Map query</summary>
-          <input id="mapQuery" placeholder="Shibuya Crossing, Tokyo">
+          <input id="mapQuery" placeholder="Ko Olina, Oahu">
         </details>
 
         <details open>
           <summary>Media (images or videos)</summary>
           <div id="media" class="adm-rows"></div>
           <div class="adm-drop" id="drop-zone">Drop files here or paste paths</div>
+          <div class="adm-import">
+            <input id="import-folder" placeholder="/Vacations/Aulani 2024" title="Folder path in this repo (case sensitive)">
+            <button class="mini" type="button" id="btn-import">Import from folder</button>
+          </div>
           <button class="mini" type="button" id="add-media">Add media</button>
         </details>
 
@@ -118,7 +122,7 @@
   <template id="row-itin">
     <div class="row">
       <input class="itin-title" placeholder="Day 1 title">
-      <input class="itin-items" placeholder="Comma separated items: Breakfast, Museum, Dinner">
+      <input class="itin-items" placeholder="Comma separated items: Breakfast, Beach, Dinner">
       <button class="mini danger del">✕</button>
     </div>
   </template>
@@ -127,7 +131,7 @@
     <div class="row">
       <button class="mini up" title="Up">↑</button>
       <button class="mini down" title="Down">↓</button>
-      <input class="media-src" placeholder="/Vacations/Germany 2025/photo1.jpg">
+      <input class="media-src" placeholder="/Vacations/Aulani 2024/photo1.jpg">
       <button class="mini danger del">✕</button>
     </div>
   </template>

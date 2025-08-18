@@ -18,6 +18,8 @@
     addLink: document.getElementById('add-link'),
     addItin: document.getElementById('add-itin'),
     addMedia: document.getElementById('add-media'),
+    importFolder: document.getElementById('import-folder'),
+    btnImport: document.getElementById('btn-import'),
     story: document.getElementById('story'),
     mapQuery: document.getElementById('mapQuery'),
     btnNew: document.getElementById('btn-new'),
@@ -142,7 +144,7 @@
     els.mediaWrap.appendChild(row);
   }
 
-  // Drag&drop convenience for media paths
+  // Drag and drop convenience
   els.drop.addEventListener('dragover', e=>{ e.preventDefault(); els.drop.classList.add('hover'); });
   els.drop.addEventListener('dragleave', ()=>els.drop.classList.remove('hover'));
   els.drop.addEventListener('drop', e=>{
@@ -150,11 +152,54 @@
     for(const f of e.dataTransfer.files||[]){ addMediaRow(`/uploads/${f.name}`); }
   });
 
+  // --- GitHub folder import helpers ---
+  const IMG_EXT = /\.(png|jpe?g|gif|webp|bmp|svg)$/i;
+  const VID_EXT = /\.(mp4|webm|mov|m4v)$/i;
+
+  async function ghRequest(url, token){
+    const headers = { Accept: 'application/vnd.github+json' };
+    if(token) headers.Authorization = `Bearer ${token}`;
+    const res = await fetch(url, { headers });
+    if(!res.ok) throw new Error(`GitHub API ${res.status}`);
+    return res.json();
+  }
+
+  async function listFolderRecursive(owner, repo, path, ref, token, acc){
+    const api = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(ref)}`;
+    const items = await ghRequest(api, token);
+    for(const it of items){
+      if(it.type === 'file'){
+        if(IMG_EXT.test(it.name) || VID_EXT.test(it.name)) acc.push('/' + it.path);
+      }else if(it.type === 'dir'){
+        await listFolderRecursive(owner, repo, it.path, ref, token, acc);
+      }
+    }
+    return acc;
+  }
+
   // Buttons
   els.addLink.addEventListener('click', ()=>addLinkRow());
   els.addItin.addEventListener('click', ()=>addItinRow());
   els.addMedia.addEventListener('click', ()=>addMediaRow(''));
   els.search.addEventListener('input', renderList);
+
+  els.btnImport.addEventListener('click', async ()=>{
+    const folder = (els.importFolder.value||'').trim();
+    const owner=els.ghOwner.value.trim(); const repo=els.ghRepo.value.trim();
+    const branch=els.ghBranch.value.trim(); const token=els.ghToken.value.trim();
+    if(!folder){ alert('Enter a folder path, for example /Vacations/Aulani 2024'); return; }
+    if(!owner||!repo||!branch){ alert('Fill GitHub settings: owner, repo, branch'); return; }
+    try{
+      const paths = await listFolderRecursive(owner, repo, folder.replace(/^\//,''), branch, token, []);
+      if(!paths.length){ alert('No media found in that folder.'); return; }
+      els.mediaWrap.innerHTML='';
+      paths.sort().forEach(p=>addMediaRow(p));
+      if(!els.cover.value && paths.length) els.cover.value = paths[0];
+      alert(`Imported ${paths.length} file(s) from ${folder}`);
+    }catch(err){
+      alert('Import failed: ' + err.message);
+    }
+  });
 
   els.btnNew.addEventListener('click', ()=>{
     const t = { id: uidFrom('new-trip', new Date().getFullYear()), title:'New Trip', year: new Date().getFullYear(), media:[], tags:[] };
@@ -180,28 +225,21 @@
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='trips.json'; a.click(); URL.revokeObjectURL(a.href);
   });
 
-  // Save to GitHub (optional)
   els.btnSaveGH.addEventListener('click', async ()=>{
-    const owner=els.ghOwner.value.trim(); const repo=els.ghRepo.value.trim(); const branch=els.ghBranch.value.trim(); const path=els.ghPath.value.trim(); const token=els.ghToken.value.trim();
+    const owner=els.ghOwner.value.trim(); const repo=els.ghRepo.value.trim(); const branch=els.ghBranch.value.trim();
+    const path=els.ghPath.value.trim(); const token=els.ghToken.value.trim();
     if(!owner||!repo||!branch||!path||!token){ alert('Please fill GitHub settings and token.'); return; }
     try{
-      const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(branch)}`, { headers:{Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json'} });
-      if(!getRes.ok){ throw new Error('Failed to fetch file metadata: '+getRes.status); }
-      const meta = await getRes.json();
+      const meta = await ghRequest(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(branch)}`, token);
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(trips, null, 2))));
       const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`, {
-        method:'PUT', headers:{Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json'},
+        method:'PUT',
+        headers:{Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json'},
         body: JSON.stringify({ message:`Update trips.json via admin UI`, content, sha: meta.sha, branch })
       });
-      if(!putRes.ok){ throw new Error('Commit failed: '+putRes.status); }
+      if(!putRes.ok) throw new Error('Commit failed: '+putRes.status);
       alert('Committed to GitHub successfully.');
     }catch(err){ alert('Error: '+err.message); }
-  });
-
-  // Paste multiple media paths
-  els.mediaWrap.addEventListener('paste', e=>{
-    const text = (e.clipboardData||window.clipboardData).getData('text');
-    if(text){ text.split(/\n+/).forEach(line=>{ line=line.trim(); if(line) addMediaRow(line); }); }
   });
 
   load();
