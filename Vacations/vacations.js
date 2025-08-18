@@ -25,7 +25,7 @@ async function list(path){
 }
 
 async function loadTrips(){
-  const root = "Vacations";
+  const root = "Vacations";   // must match repo folder exactly!
   const items = await list(root);
   return items
     .filter(i => i.type==="dir" && !IGNORE.includes(i.name.toLowerCase()))
