@@ -1,0 +1,10 @@
+{
+    "images": [
+        "*.jpg",
+        "*.JPG",
+        "*.jpeg",
+        "*.JPEG",
+        "*.png",
+        "*.PNG"
+    ]
+}

@@ -174,7 +174,7 @@
     </div>
 
     <script>
-        // Auth check
+        // Auth check and image loading
         document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
             if (!params.has('auth')) {
@@ -182,20 +182,26 @@
                 return;
             }
 
-            // Load all images from the current directory
-            loadImages();
-        });
-
-        function loadImages() {
-            const photoGrid = document.getElementById('photoGrid');
-            const imageExtensions = ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'];
-            
-            // List of image filenames in the directory
+            // Static list of images - all images must be in this directory
             const images = [
                 '15C65D67-026A-4DF6-81B1-024224D094B7.JPG',
-                // Add all your image filenames here
+                '47C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                '37C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                '65C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'A64C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'A88C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'BA81C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'BA97C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'C5C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'DACE65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'E55C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'E82C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                'FBFC65D67-026A-4DF6-81B1-024224D094B7.JPG'
             ];
 
+            const photoGrid = document.getElementById('photoGrid');
+            
+            // Create photo grid items
             images.forEach(filename => {
                 const photoItem = document.createElement('div');
                 photoItem.className = 'photo-item';
@@ -203,14 +209,15 @@
                 const img = document.createElement('img');
                 img.src = filename;
                 img.alt = 'Aulani Vacation Photo';
+                img.loading = 'lazy';
                 
                 photoItem.appendChild(img);
                 photoGrid.appendChild(photoItem);
-
-                // Add click handler for lightbox
+                
+                // Add lightbox functionality
                 photoItem.addEventListener('click', () => openLightbox(filename));
             });
-        }
+        });
 
         // Lightbox functionality
         const lightbox = document.getElementById('lightbox');
@@ -218,8 +225,8 @@
         const lightboxClose = document.querySelector('.lightbox-close');
 
         function openLightbox(imageSrc) {
-            lightboxImg.src = imageSrc;
             lightbox.classList.add('active');
+            lightboxImg.src = imageSrc;
         }
 
         lightboxClose.addEventListener('click', () => {
@@ -230,6 +237,17 @@
             if (e.target === lightbox) {
                 lightbox.classList.remove('active');
             }
+        });
+
+        // Close lightbox with escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
         });
 
         // Close lightbox with escape key
