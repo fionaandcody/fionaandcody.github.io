@@ -101,3 +101,90 @@ document.addEventListener("DOMContentLoaded", () => {
   els.back.addEventListener("click", renderList);
   renderList();
 });
+
+// New vacation folder loading code
+document.addEventListener('DOMContentLoaded', () => {
+    // Check authentication
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('auth')) {
+        window.location.href = '/index.html';
+        return;
+    }
+
+    // Fetch vacation folders
+    fetchVacations();
+});
+
+async function fetchVacations() {
+    try {
+        const response = await fetch('/api/vacations');
+        const vacations = await response.json();
+        renderVacations(vacations);
+    } catch (error) {
+        console.error('Error loading vacations:', error);
+        // Fallback to demo data if API fails
+        const demoVacations = [
+            { name: 'Hawaii 2023', cover: 'Hawaii/cover.jpg' },
+            { name: 'Mexico 2022', cover: 'Mexico/cover.jpg' },
+            { name: 'Europe 2021', cover: 'Europe/cover.jpg' }
+        ];
+        renderVacations(demoVacations);
+    }
+}
+
+function renderVacations(vacations) {
+    const tripList = document.getElementById('trip-list');
+    tripList.innerHTML = '';
+
+    vacations.forEach(vacation => {
+        const card = document.createElement('div');
+        card.className = 'vacation-card';
+        card.innerHTML = `
+            <img src="${vacation.cover}" alt="${vacation.name}">
+            <div class="vacation-info">
+                <h3>${vacation.name}</h3>
+            </div>
+        `;
+        
+        card.addEventListener('click', () => loadVacationDetails(vacation.name));
+        tripList.appendChild(card);
+    });
+}
+
+async function loadVacationDetails(vacationName) {
+    const tripList = document.getElementById('trip-list');
+    const tripDetail = document.getElementById('trip-detail');
+    const tripTitle = document.getElementById('trip-title');
+    const tripGallery = document.getElementById('trip-gallery');
+
+    tripList.hidden = true;
+    tripDetail.hidden = false;
+    tripTitle.textContent = vacationName;
+
+    try {
+        const response = await fetch(`/api/vacations/${vacationName}/photos`);
+        const photos = await response.json();
+        renderGallery(photos);
+    } catch (error) {
+        console.error('Error loading vacation photos:', error);
+        tripGallery.innerHTML = '<p>Error loading photos</p>';
+    }
+}
+
+document.getElementById('back-to-trips').addEventListener('click', () => {
+    document.getElementById('trip-list').hidden = false;
+    document.getElementById('trip-detail').hidden = true;
+});
+
+// Lightbox functionality
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+document.getElementById('lightbox-close').addEventListener('click', () => {
+    lightbox.hidden = true;
+});
+
+function showLightbox(imgSrc) {
+    lightboxImg.src = imgSrc;
+    lightbox.hidden = false;
+}

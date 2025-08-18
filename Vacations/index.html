@@ -1,38 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vacations - Fiona & Cody</title>
-  <link rel="stylesheet" href="vacations.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiona & Cody | Vacations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="vacations.css">
 </head>
 <body>
-  <header>
-    <a href="/index.html" class="back-link">← Back to site</a>
-    <h1>Vacations</h1>
-  </header>
+    <header id="header">
+        <div class="header-container">
+            <a href="/home.html" class="logo">Fiona & Cody</a>
+            <nav class="nav-links" id="navLinks">
+                <a href="/home.html">Home</a>
+                <a href="/photos.html?auth=true">Photos</a>
+                <a href="/videos.html">Videos</a>
+                <a href="/honeymoon.html?auth=true">Honeymoon</a>
+                <a href="/index.html">Logout</a>
+            </nav>
+        </div>
+    </header>
 
-  <main>
-    <!-- Vacation trip list -->
-    <section id="trip-list" class="gallery-grid"></section>
-
-    <!-- Trip detail -->
-    <section id="trip-detail" hidden>
-      <button id="back-to-trips" class="btn">← All trips</button>
-      <h2 id="trip-title"></h2>
-      <div id="trip-gallery" class="gallery-grid"></div>
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1>Our Vacations</h1>
+            <p>Exploring the world together</p>
+        </div>
     </section>
-  </main>
 
-  <footer>
-    <p>Fiona & Cody</p>
-  </footer>
+    <main class="main-content">
+        <!-- Vacation trip list -->
+        <section id="trip-list" class="gallery-grid"></section>
+        
+        <!-- Trip detail -->
+        <section id="trip-detail" hidden>
+            <button id="back-to-trips" class="btn">← Back to All Trips</button>
+            <h2 id="trip-title"></h2>
+            <div id="trip-gallery" class="gallery-grid"></div>
+        </section>
+    </main>
 
-  <div id="lightbox" class="lightbox" hidden>
-    <span id="lightbox-close">&times;</span>
-    <img id="lightbox-img" src="" alt="">
-  </div>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Fiona & Cody</div>
+            <p class="footer-text">Thank you for visiting our memories website.</p>
+            <div class="footer-links">
+                <a href="/home.html">Home</a>
+                <a href="/photos.html?auth=true">Photos</a>
+                <a href="/videos.html">Videos</a>
+                <a href="/honeymoon.html?auth=true">Honeymoon</a>
+            </div>
+            <p class="copyright">&copy; 2023 Our Memories. All rights reserved.</p>
+        </div>
+    </footer>
 
-  <script src="vacations.js"></script>
+    <div id="lightbox" class="lightbox" hidden>
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script src="vacations.js"></script>
 </body>
 </html>

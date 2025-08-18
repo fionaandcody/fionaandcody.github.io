@@ -202,7 +202,7 @@
         
         /* Video Gallery */
         .video-gallery {
-            display: none;  /* Hide video gallery */
+            display: grid; /* Change from 'none' to 'grid' */
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
@@ -611,12 +611,6 @@
             .featured-video-title {
                 font-size: 1.5rem;
             }
-        }
-        
-        /* Add this CSS rule to hide the video collection and upload sections */
-        #video-gallery,
-        .upload-section {
-            display: none;
         }
     </style>
 </head>
@@ -1030,6 +1024,26 @@
         
         // Call checkAuth on page load
         checkAuth();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('auth')) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Show video gallery
+            document.getElementById('video-gallery').style.display = 'block';
+            
+            // Initial render of videos
+            try {
+                renderVideos();
+            } catch (error) {
+                console.error('Error rendering videos:', error);
+                alert('There was an error loading the videos. Please try refreshing the page.');
+            }
+        });
     </script>
 </body>
 </html>
