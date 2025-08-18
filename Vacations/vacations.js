@@ -1,4 +1,4 @@
-// Auto-list vacations using GitHub API (works with public repos)
+// Auto gallery for Vacations, styled like main site
 // Repo: fionaandcody/fionaandcody.github.io
 
 const GH = {
@@ -10,15 +10,15 @@ const GH = {
 const IMG = /\.(png|jpe?g|gif|webp)$/i;
 const VID = /\.(mp4|webm|mov|m4v)$/i;
 
+// folders to ignore
+const IGNORE = ["data", "admin", ".github"];
+
 const els = {
   list: document.getElementById("v-list"),
   detail: document.getElementById("v-detail"),
   back: document.getElementById("v-back"),
   dTitle: document.getElementById("d-title"),
-  dGallery: document.getElementById("d-gallery"),
-  lb: document.getElementById("v-lightbox"),
-  lbImg: document.getElementById("lb-img"),
-  lbClose: document.getElementById("lb-close")
+  dGallery: document.getElementById("d-gallery")
 };
 
 // ---- GitHub API helpers
@@ -33,11 +33,13 @@ async function list(path){
 async function loadTrips(){
   const root = "Vacations";
   const items = await list(root);
-  return items.filter(i => i.type==="dir").map(d=>({
-    id: d.name,
-    title: d.name,
-    folder: `${root}/${d.name}`
-  }));
+  return items
+    .filter(i => i.type==="dir" && !IGNORE.includes(i.name.toLowerCase()))
+    .map(d=>({
+      id: d.name,
+      title: d.name,
+      folder: `${root}/${d.name}`
+    }));
 }
 
 // ---- Render list
@@ -45,25 +47,23 @@ async function renderList(){
   els.detail.hidden = true;
   els.list.innerHTML = "";
   const trips = await loadTrips();
+
   for(const t of trips){
     const files = await list(t.folder);
     const cover = files.find(f=>IMG.test(f.name)) || files.find(f=>VID.test(f.name));
 
     const card=document.createElement("div");
-    card.className="v-card";
-    if(cover){
-      if(VID.test(cover.name)){
-        const v=document.createElement("video");
-        v.src=`/${t.folder}/${cover.name}`;
-        v.muted=true; v.playsInline=true;
-        card.appendChild(v);
-      } else {
-        const i=document.createElement("img");
-        i.src=`/${t.folder}/${cover.name}`;
-        card.appendChild(i);
-      }
+    card.className="photo-card"; // reuse your main site photo card styles
+
+    if(cover && IMG.test(cover.name)){
+      const i=document.createElement("img");
+      i.src=`/${t.folder}/${cover.name}`;
+      card.appendChild(i);
     }
-    const h=document.createElement("h3"); h.textContent=t.title;
+
+    const h=document.createElement("div");
+    h.className="caption";
+    h.textContent=t.title;
     card.appendChild(h);
 
     card.addEventListener("click",()=>openTrip(t));
@@ -79,27 +79,39 @@ async function openTrip(trip){
   els.dGallery.innerHTML="";
 
   const files = await list(trip.folder);
-  files.filter(f=>IMG.test(f.name)||VID.test(f.name)).forEach(f=>{
-    const src=`/${trip.folder}/${f.name}`;
-    if(VID.test(f.name)){
-      const v=document.createElement("video");
-      v.src=src; v.controls=true;
-      els.dGallery.appendChild(v);
-    } else {
-      const i=document.createElement("img");
-      i.src=src; i.alt=trip.title;
-      i.addEventListener("click",()=>openLightbox(src));
-      els.dGallery.appendChild(i);
-    }
-  });
+  files
+    .filter(f=>IMG.test(f.name)||VID.test(f.name))
+    .forEach(f=>{
+      const src=`/${trip.folder}/${f.name}`;
+      if(VID.test(f.name)){
+        const v=document.createElement("video");
+        v.src=src; v.controls=true;
+        v.className="gallery-item";
+        els.dGallery.appendChild(v);
+      } else {
+        const i=document.createElement("img");
+        i.src=src; i.alt=trip.title;
+        i.className="gallery-item";
+        i.addEventListener("click",()=>openLightbox(src));
+        els.dGallery.appendChild(i);
+      }
+    });
 }
 
-// ---- Lightbox
-function openLightbox(src){ els.lb.hidden=false; els.lbImg.src=src; }
-function closeLB(){ els.lb.hidden=true; els.lbImg.src=""; }
+// ---- Lightbox (reusing your main site’s modal style)
+function openLightbox(src){
+  const modal = document.createElement("div");
+  modal.className="modal";
+  modal.innerHTML = `
+    <span class="close">&times;</span>
+    <img class="modal-content" src="${src}">
+  `;
+  document.body.appendChild(modal);
+  modal.querySelector(".close").onclick=()=>modal.remove();
+  modal.onclick=(e)=>{ if(e.target===modal) modal.remove(); };
+}
 
 els.back.addEventListener("click",renderList);
-els.lbClose.addEventListener("click",closeLB);
 
 // Init
 renderList();
