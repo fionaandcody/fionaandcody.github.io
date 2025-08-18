@@ -310,8 +310,8 @@
             const password = document.getElementById('password').value;
             
             if (password === correctPassword) {
-                // Password is correct, redirect to home page
-                window.location.href = "home.html";
+                // Password is correct, redirect to home page with auth parameter
+                window.location.href = "home.html?auth=true";
             } else {
                 // Password is incorrect, show error
                 errorMessage.style.display = 'block';
