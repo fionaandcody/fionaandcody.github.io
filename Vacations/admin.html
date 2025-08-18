@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vacations Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="adm-header">
+    <div class="adm-left">
+      <a href="/Vacations/" class="adm-home">← Back to Vacations</a>
+      <h1>Manage Trips</h1>
+    </div>
+    <div class="adm-right">
+      <button id="btn-new">New trip</button>
+      <button id="btn-download" title="Download updated trips.json">Download JSON</button>
+      <button id="btn-save-github" title="Commit to GitHub">Save to GitHub</button>
+    </div>
+  </header>
+
+  <main class="adm-main">
+    <aside class="adm-sidebar">
+      <div class="adm-conn">
+        <h3>GitHub settings</h3>
+        <label>Owner <input id="gh-owner" placeholder="fionaandcody"></label>
+        <label>Repo <input id="gh-repo" placeholder="your repo name"></label>
+        <label>Branch <input id="gh-branch" value="main"></label>
+        <label>File path <input id="gh-path" value="Vacations/data/trips.json"></label>
+        <label>Token <input id="gh-token" type="password" placeholder="ghp_... (repo scope)"></label>
+        <p class="adm-hint">Token is kept in this browser only. You can also just Download JSON and commit manually.</p>
+      </div>
+
+      <div class="adm-list">
+        <div class="adm-list-head">
+          <input id="search" placeholder="Search trips">
+        </div>
+        <ul id="trip-list" class="adm-ul"></ul>
+      </div>
+    </aside>
+
+    <section class="adm-editor">
+      <form id="trip-form" class="adm-form">
+        <div class="adm-grid">
+          <label>ID
+            <input id="id" readonly>
+          </label>
+          <label>Title
+            <input id="title" required>
+          </label>
+          <label>Location
+            <input id="location">
+          </label>
+          <label>Dates (YYYY-MM-DD to YYYY-MM-DD)
+            <input id="dates" placeholder="2025-02-03 to 2025-02-17">
+          </label>
+          <label>Year
+            <input id="year" type="number" min="1900" max="2100">
+          </label>
+          <label>Cover path
+            <input id="cover" placeholder="/Vacations/Aulani 2024/cover.jpg">
+          </label>
+        </div>
+
+        <label>Summary
+          <textarea id="summary" rows="3"></textarea>
+        </label>
+
+        <label>Tags (comma separated)
+          <input id="tags" placeholder="beach, theme-park, international">
+        </label>
+
+        <details open>
+          <summary>Links</summary>
+          <div id="links" class="adm-rows"></div>
+          <button class="mini" type="button" id="add-link">Add link</button>
+        </details>
+
+        <details open>
+          <summary>Itinerary</summary>
+          <div id="itinerary" class="adm-rows"></div>
+          <button class="mini" type="button" id="add-itin">Add day</button>
+        </details>
+
+        <details open>
+          <summary>Story / Notes</summary>
+          <textarea id="story" rows="6" placeholder="Free text notes..."></textarea>
+        </details>
+
+        <details open>
+          <summary>Map query</summary>
+          <input id="mapQuery" placeholder="Shibuya Crossing, Tokyo">
+        </details>
+
+        <details open>
+          <summary>Media (images or videos)</summary>
+          <div id="media" class="adm-rows"></div>
+          <div class="adm-drop" id="drop-zone">Drop files here or paste paths</div>
+          <button class="mini" type="button" id="add-media">Add media</button>
+        </details>
+
+        <div class="adm-actions">
+          <button type="submit" id="btn-save">Save changes</button>
+          <button type="button" id="btn-delete" class="danger">Delete trip</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <template id="row-link">
+    <div class="row">
+      <input class="link-label" placeholder="Label">
+      <input class="link-url" placeholder="https://...">
+      <button class="mini danger del">✕</button>
+    </div>
+  </template>
+
+  <template id="row-itin">
+    <div class="row">
+      <input class="itin-title" placeholder="Day 1 title">
+      <input class="itin-items" placeholder="Comma separated items: Breakfast, Museum, Dinner">
+      <button class="mini danger del">✕</button>
+    </div>
+  </template>
+
+  <template id="row-media">
+    <div class="row">
+      <button class="mini up" title="Up">↑</button>
+      <button class="mini down" title="Down">↓</button>
+      <input class="media-src" placeholder="/Vacations/Germany 2025/photo1.jpg">
+      <button class="mini danger del">✕</button>
+    </div>
+  </template>
+
+  <script src="admin.js" defer></script>
+</body>
+</html>

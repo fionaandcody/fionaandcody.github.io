@@ -65,3 +65,9 @@ body{margin:0; background:var(--bg); color:var(--text); font-family:var(--font-u
 [data-theme="pixel"] .vc-brand h1{font-family:var(--font-pixel); font-size:20px}
 [data-theme="pixel"] .vc-subtitle{font-family:var(--font-pixel); font-size:10px}
 [data-theme="pixel"] .vc-tag{border-style:dashed}
+
+.vc-manage-link{
+  display:inline-block; text-decoration:none; background:var(--card); color:var(--text);
+  border:1px solid var(--border); padding:10px 12px; border-radius:10px
+}
+.vc-manage-link:hover{ border-color:var(--accent) }
