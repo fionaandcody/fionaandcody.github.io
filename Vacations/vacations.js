@@ -1,6 +1,4 @@
-// Auto gallery for Vacations, styled like main site
-// Repo: fionaandcody/fionaandcody.github.io
-
+// Auto gallery for Vacations — matches main site look
 const GH = {
   owner: "fionaandcody",
   repo: "fionaandcody.github.io",
@@ -9,8 +7,6 @@ const GH = {
 
 const IMG = /\.(png|jpe?g|gif|webp)$/i;
 const VID = /\.(mp4|webm|mov|m4v)$/i;
-
-// folders to ignore
 const IGNORE = ["data", "admin", ".github"];
 
 const els = {
@@ -21,7 +17,6 @@ const els = {
   dGallery: document.getElementById("d-gallery")
 };
 
-// ---- GitHub API helpers
 async function list(path){
   const url = `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${encodeURIComponent(path)}?ref=${GH.branch}`;
   const res = await fetch(url);
@@ -29,20 +24,14 @@ async function list(path){
   return res.json();
 }
 
-// ---- Build trips
 async function loadTrips(){
   const root = "Vacations";
   const items = await list(root);
   return items
     .filter(i => i.type==="dir" && !IGNORE.includes(i.name.toLowerCase()))
-    .map(d=>({
-      id: d.name,
-      title: d.name,
-      folder: `${root}/${d.name}`
-    }));
+    .map(d=>({ title: d.name, folder: `${root}/${d.name}` }));
 }
 
-// ---- Render list
 async function renderList(){
   els.detail.hidden = true;
   els.list.innerHTML = "";
@@ -53,7 +42,7 @@ async function renderList(){
     const cover = files.find(f=>IMG.test(f.name)) || files.find(f=>VID.test(f.name));
 
     const card=document.createElement("div");
-    card.className="photo-card"; // reuse your main site photo card styles
+    card.className="photo-card";
 
     if(cover && IMG.test(cover.name)){
       const i=document.createElement("img");
@@ -61,17 +50,16 @@ async function renderList(){
       card.appendChild(i);
     }
 
-    const h=document.createElement("div");
-    h.className="caption";
-    h.textContent=t.title;
-    card.appendChild(h);
+    const caption=document.createElement("div");
+    caption.className="caption";
+    caption.textContent=t.title;
+    card.appendChild(caption);
 
     card.addEventListener("click",()=>openTrip(t));
     els.list.appendChild(card);
   }
 }
 
-// ---- Render detail
 async function openTrip(trip){
   els.detail.hidden=false;
   els.list.innerHTML="";
@@ -79,30 +67,27 @@ async function openTrip(trip){
   els.dGallery.innerHTML="";
 
   const files = await list(trip.folder);
-  files
-    .filter(f=>IMG.test(f.name)||VID.test(f.name))
-    .forEach(f=>{
-      const src=`/${trip.folder}/${f.name}`;
-      if(VID.test(f.name)){
-        const v=document.createElement("video");
-        v.src=src; v.controls=true;
-        v.className="gallery-item";
-        els.dGallery.appendChild(v);
-      } else {
-        const i=document.createElement("img");
-        i.src=src; i.alt=trip.title;
-        i.className="gallery-item";
-        i.addEventListener("click",()=>openLightbox(src));
-        els.dGallery.appendChild(i);
-      }
-    });
+  files.filter(f=>IMG.test(f.name)||VID.test(f.name)).forEach(f=>{
+    const src=`/${trip.folder}/${f.name}`;
+    if(VID.test(f.name)){
+      const v=document.createElement("video");
+      v.src=src; v.controls=true;
+      v.className="gallery-item";
+      els.dGallery.appendChild(v);
+    } else {
+      const i=document.createElement("img");
+      i.src=src; i.alt=trip.title;
+      i.className="gallery-item";
+      i.addEventListener("click",()=>openLightbox(src));
+      els.dGallery.appendChild(i);
+    }
+  });
 }
 
-// ---- Lightbox (reusing your main site’s modal style)
 function openLightbox(src){
-  const modal = document.createElement("div");
+  const modal=document.createElement("div");
   modal.className="modal";
-  modal.innerHTML = `
+  modal.innerHTML=`
     <span class="close">&times;</span>
     <img class="modal-content" src="${src}">
   `;
@@ -112,6 +97,4 @@ function openLightbox(src){
 }
 
 els.back.addEventListener("click",renderList);
-
-// Init
 renderList();

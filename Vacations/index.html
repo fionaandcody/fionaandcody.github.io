@@ -7,24 +7,19 @@
   <link href="vacations.css" rel="stylesheet">
 </head>
 <body>
-  <header class="v-header">
-    <a href="/">← Back to site</a>
+  <header>
+    <a href="/">&larr; Back to site</a>
     <h1>Vacations</h1>
   </header>
 
-  <main class="v-wrap">
-    <section id="v-list"></section>
+  <main>
+    <section id="v-list" class="gallery-grid"></section>
     <section id="v-detail" hidden>
-      <button id="v-back">← All trips</button>
+      <button id="v-back" class="back-btn">&larr; All trips</button>
       <h2 id="d-title"></h2>
-      <div id="d-gallery" class="v-grid"></div>
+      <div id="d-gallery" class="gallery-grid"></div>
     </section>
   </main>
-
-  <div id="v-lightbox" hidden>
-    <button id="lb-close">✕</button>
-    <img id="lb-img" alt="">
-  </div>
 
   <script src="vacations.js"></script>
 </body>

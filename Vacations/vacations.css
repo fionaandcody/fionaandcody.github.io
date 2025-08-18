@@ -1,17 +1,11 @@
-body{margin:0;font-family:sans-serif;background:#0b0f14;color:#e5eef8}
-.v-header{padding:16px;background:#111827;border-bottom:1px solid #1e2a3a}
-.v-header a{color:#8fa2b8;text-decoration:none}
-.v-header h1{margin:0;color:#e5eef8}
+/* Pull in shared gallery styles from site */
+@import url("/photos.css");
 
-.v-wrap{max-width:1000px;margin:0 auto;padding:16px}
-#v-list{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
-.v-card{border:1px solid #1e2a3a;border-radius:8px;overflow:hidden;background:#0f1620;cursor:pointer}
-.v-card img{width:100%;display:block}
-.v-card h3{margin:8px;padding:0 8px}
-
-.v-grid{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
-.v-grid img{width:100%;border-radius:8px;cursor:pointer}
-
-#v-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;z-index:100}
-#v-lightbox img{max-width:95%;max-height:95%;border-radius:8px}
-#lb-close{position:absolute;top:20px;right:20px;font-size:20px;background:#0f1620;color:#e5eef8;border:1px solid #1e2a3a;border-radius:6px;padding:6px;cursor:pointer}
+/* Optional tweaks just for vacations */
+header {
+  text-align: center;
+  margin: 20px 0;
+}
+.back-btn {
+  margin-bottom: 20px;
+}
