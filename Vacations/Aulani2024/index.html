@@ -5,67 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fiona & Cody | Aulani 2024</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
     <style>
+        /* Copy styles from index.html above */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
+            gap: 2rem;
         }
-        
+
         .photo-grid img {
             width: 100%;
             height: 300px;
             object-fit: cover;
             border-radius: 10px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s;
+            cursor: pointer;
         }
-        
+
         .photo-grid img:hover {
             transform: scale(1.02);
         }
 
-        .back-link {
+        .back-button {
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
             color: var(--accent-color);
             text-decoration: none;
             font-weight: 500;
         }
 
-        .back-link:hover {
+        .back-button:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="site-header">
+    <header class="site-header">
         <div class="header-content">
-            <h1><a href="/home.html?auth=true">Fiona & Cody</a></h1>
-            <div class="nav-links">
+            <a href="/home.html?auth=true" class="site-title">Fiona & Cody</a>
+            <nav class="nav-links">
                 <a href="/home.html?auth=true">Home</a>
                 <a href="/photos.html?auth=true">Photos</a>
                 <a href="/videos.html?auth=true">Videos</a>
                 <a href="/Vacations/?auth=true" class="active">Vacations</a>
                 <a href="/honeymoon.html?auth=true">Honeymoon</a>
                 <a href="/index.html">Logout</a>
-            </div>
+            </nav>
         </div>
-    </div>
+    </header>
 
     <main>
-        <a href="../?auth=true" class="back-link">← Back to Vacations</a>
-        <section class="vacation-content">
-            <h2>Aulani 2024</h2>
-            <div class="photo-grid">
-                <!-- Add your Aulani photos here -->
-                <img src="1.jpg" alt="Aulani Vacation">
-                <img src="2.jpg" alt="Aulani Vacation">
-                <img src="3.jpg" alt="Aulani Vacation">
-                <!-- Add more images as needed -->
-            </div>
-        </section>
+        <a href="../?auth=true" class="back-button">← Back to Vacations</a>
+        <h1>Aulani 2024</h1>
+        <div class="photo-grid">
+            <!-- Replace these with your actual Aulani photos -->
+            <img src="15C65D67-026A-4DF6-81B1-024224D094B7.JPG" alt="Aulani Vacation">
+            <!-- Add more images here -->
+        </div>
     </main>
 
     <script>
@@ -74,6 +70,10 @@
             if (!params.has('auth')) {
                 window.location.href = '/index.html';
             }
+        });
+    </script>
+</body>
+</html>
         });
     </script>
 </body>
