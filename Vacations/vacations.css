@@ -1,11 +1,12 @@
-/* Pull in shared gallery styles from site */
+/* Reuse existing site styles so it matches photos/videos */
 @import url("/photos.css");
 
-/* Optional tweaks just for vacations */
+/* Page-specific tweaks */
 header {
   text-align: center;
   margin: 20px 0;
 }
+
 .back-btn {
   margin-bottom: 20px;
 }

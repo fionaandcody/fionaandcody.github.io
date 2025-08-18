@@ -96,5 +96,9 @@ function openLightbox(src){
   modal.onclick=(e)=>{ if(e.target===modal) modal.remove(); };
 }
 
-els.back.addEventListener("click",renderList);
-renderList();
+document.addEventListener("DOMContentLoaded", () => {
+  if(els.back){
+    els.back.addEventListener("click",renderList);
+  }
+  renderList();
+});
