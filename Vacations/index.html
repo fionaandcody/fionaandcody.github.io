@@ -2,104 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Fiona & Cody | Vacations</title>
+  <title>Vacations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vacations.css">
 </head>
 <body>
-  <header class="vc-header">
-    <div class="vc-brand">
-      <a href="/" class="vc-home-link">← Back to fionaandcody.com</a>
-      <h1>Vacations</h1>
-      <p class="vc-subtitle">Our quest log of adventures</p>
-    </div>
-    <div class="vc-controls">
-      <input id="vc-search" type="search" placeholder="Search trips, locations, tags">
-      <select id="vc-year-filter">
-        <option value="">All years</option>
-      </select>
-      <select id="vc-tag-filter">
-        <option value="">All tags</option>
-      </select>
-      <button id="vc-theme-toggle" title="Toggle theme">Theme</button>
-      <a id="vc-manage-link" class="vc-manage-link" href="admin.html" title="Manage trips">Manage</a>
-      <a id="vc-manage-link" class="vc-manage-link" href="admin.html" title="Manage trips">Manage</a>
+  <header class="v-header">
+    <div class="v-wrap">
+      <a class="v-home" href="/">← Back to site</a>
+      <h1 class="v-title">Vacations</h1>
+      <p class="v-sub">Each folder inside /Vacations is a trip</p>
     </div>
   </header>
 
-  <main id="vc-main">
-    <!-- List view -->
-    <section id="vc-achievements" aria-label="Achievements"></section>
-    <section id="vc-grid" class="vc-grid" aria-live="polite"></section>
+  <main id="v-main" class="v-wrap">
+    <section id="v-list" aria-live="polite"></section>
 
-    <template id="vc-card-tpl">
-      <article class="vc-card">
-        <div class="vc-card-media">
-          <img alt="" loading="lazy">
-          <div class="vc-chip vc-year"></div>
-        </div>
-        <div class="vc-card-body">
-          <h3 class="vc-card-title"></h3>
-          <p class="vc-card-meta"></p>
-          <div class="vc-tags"></div>
-          <button class="vc-view-btn">Open</button>
-        </div>
-      </article>
-    </template>
+    <section id="v-detail" hidden>
+      <button id="v-back" class="v-btn">← All trips</button>
+      <h2 id="d-title" class="v-h2"></h2>
+      <p id="d-meta" class="v-meta"></p>
 
-    <!-- Detail view -->
-    <section id="vc-detail" hidden>
-      <button class="vc-back" id="vc-back">← All trips</button>
-      <article class="vc-detail-hero">
-        <div class="vc-hero-media"><img id="vc-detail-cover" alt=""></div>
-        <div class="vc-hero-body">
-          <h2 id="vc-detail-title"></h2>
-          <p id="vc-detail-meta" class="vc-detail-meta"></p>
-          <div id="vc-detail-tags" class="vc-tags"></div>
-          <div id="vc-detail-stats" class="vc-stats"></div>
-          <div id="vc-detail-links" class="vc-links"></div>
-        </div>
-      </article>
-
-      <section class="vc-section">
-        <h3>Gallery</h3>
-        <div id="vc-detail-gallery" class="vc-gallery"></div>
-      </section>
-
-      <section class="vc-section" id="vc-map-section" hidden>
-        <h3>Map</h3>
-        <div class="vc-map-wrap">
-          <iframe id="vc-detail-map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-      </section>
-
-      <section class="vc-section" id="vc-itinerary-section" hidden>
-        <h3>Itinerary</h3>
-        <div id="vc-itinerary"></div>
-      </section>
-
-      <section class="vc-section" id="vc-story-section" hidden>
-        <h3>Notes</h3>
-        <div id="vc-story" class="vc-story"></div>
-      </section>
+      <div id="d-gallery" class="v-grid"></div>
     </section>
   </main>
 
-  <!-- Lightbox supports images and videos -->
-  <div id="vc-lightbox" class="vc-lightbox" hidden>
-    <button class="vc-lightbox-close" aria-label="Close">✕</button>
-    <button class="vc-lightbox-prev" aria-label="Previous">←</button>
-    <figure class="vc-lightbox-stage">
-      <img id="vc-lb-img" alt="" hidden>
-      <video id="vc-lb-video" controls playsinline hidden></video>
-      <figcaption id="vc-lb-caption"></figcaption>
+  <!-- very small lightbox -->
+  <div id="v-lightbox" class="v-lb" hidden>
+    <button id="lb-close" class="v-btn v-lb-close">✕</button>
+    <button id="lb-prev" class="v-btn v-nav">←</button>
+    <figure class="v-stage">
+      <img id="lb-img" alt="" hidden>
+      <video id="lb-video" controls playsinline hidden></video>
+      <figcaption id="lb-cap"></figcaption>
     </figure>
-    <button class="vc-lightbox-next" aria-label="Next">→</button>
+    <button id="lb-next" class="v-btn v-nav">→</button>
   </div>
 
-  <footer class="vc-footer">
-    <p>Built with love, coffee, and a bit of XP.</p>
+  <footer class="v-wrap v-footer">
+    <p style="color:#64748b">Tip: just add a new folder under /Vacations and push.</p>
   </footer>
 
   <script src="vacations.js" defer></script>
