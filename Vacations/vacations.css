@@ -1,12 +1,80 @@
-/* Reuse existing site styles so it matches photos/videos */
-@import url("/photos.css");
-
-/* Page-specific tweaks */
-header {
-  text-align: center;
-  margin: 20px 0;
+body {
+  font-family: "Helvetica Neue", sans-serif;
+  margin: 0;
+  background: #fdfdfd;
+  color: #333;
 }
 
-.back-btn {
-  margin-bottom: 20px;
+header {
+  text-align: center;
+  padding: 20px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+h1, h2 {
+  margin: 10px 0;
+  color: #2c2c2c;
+}
+
+.back-link, .btn {
+  text-decoration: none;
+  color: #7c4d79;
+  font-size: 14px;
+  border: 1px solid #7c4d79;
+  border-radius: 4px;
+  padding: 6px 10px;
+  background: #fff;
+  cursor: pointer;
+}
+.back-link:hover, .btn:hover {
+  background: #7c4d79;
+  color: #fff;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.gallery-grid img, .gallery-grid video {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #f8f8f8;
+  border-top: 1px solid #eee;
+  margin-top: 40px;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+}
+.lightbox span {
+  position: absolute;
+  top: 20px; right: 40px;
+  font-size: 36px;
+  color: white;
+  cursor: pointer;
 }

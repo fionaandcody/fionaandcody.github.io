@@ -1,28 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Vacations</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="vacations.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacations - Fiona & Cody</title>
+  <link rel="stylesheet" href="vacations.css">
 </head>
 <body>
   <header>
-    <a href="/">&larr; Back to site</a>
+    <a href="/index.html" class="back-link">← Back to site</a>
     <h1>Vacations</h1>
   </header>
 
   <main>
-    <!-- Trip list -->
-    <section id="v-list" class="gallery-grid"></section>
+    <!-- Vacation trip list -->
+    <section id="trip-list" class="gallery-grid"></section>
 
     <!-- Trip detail -->
-    <section id="v-detail" hidden>
-      <button id="v-back" class="back-btn">&larr; All trips</button>
-      <h2 id="d-title"></h2>
-      <div id="d-gallery" class="gallery-grid"></div>
+    <section id="trip-detail" hidden>
+      <button id="back-to-trips" class="btn">← All trips</button>
+      <h2 id="trip-title"></h2>
+      <div id="trip-gallery" class="gallery-grid"></div>
     </section>
   </main>
+
+  <footer>
+    <p>Fiona & Cody</p>
+  </footer>
+
+  <div id="lightbox" class="lightbox" hidden>
+    <span id="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
 
   <script src="vacations.js"></script>
 </body>
