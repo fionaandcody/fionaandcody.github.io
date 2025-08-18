@@ -4,8 +4,8 @@
 (function(){
   // Set these to your Pages repo. Public repos work with no token.
   const GH = {
-    owner: 'YOUR_GITHUB_USERNAME_OR_ORG',
-    repo:  'YOUR_REPO_NAME',   // e.g. fionaandcody.github.io
+    owner: 'codycrampton@gmail.com',
+    repo:  'fionaandcody.github.io',   // e.g. fionaandcody.github.io
     branch:'main',
     token: ''                  // leave empty if public
   };
