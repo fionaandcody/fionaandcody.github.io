@@ -6,6 +6,38 @@
     <title>Fiona & Cody | Aulani 2024</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+    <style>
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+        
+        .photo-grid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-grid img:hover {
+            transform: scale(1.02);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="site-header">
@@ -23,16 +55,20 @@
     </div>
 
     <main>
+        <a href="../?auth=true" class="back-link">← Back to Vacations</a>
         <section class="vacation-content">
             <h2>Aulani 2024</h2>
             <div class="photo-grid">
-                <!-- Photos will be added here -->
+                <!-- Add your Aulani photos here -->
+                <img src="1.jpg" alt="Aulani Vacation">
+                <img src="2.jpg" alt="Aulani Vacation">
+                <img src="3.jpg" alt="Aulani Vacation">
+                <!-- Add more images as needed -->
             </div>
         </section>
     </main>
 
     <script>
-        // Check authentication
         document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
             if (!params.has('auth')) {
