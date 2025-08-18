@@ -7,9 +7,21 @@
     "year": 2024,
     "summary": "Sunsets, snorkeling, and shave ice.",
     "cover": "/Vacations/Aulani 2024/cover.jpg",
-    "media": [
-      "/Vacations/Aulani 2024/cover.jpg"
+    "tags": [
+      "beach",
+      "snorkel"
     ],
-    "tags": ["beach", "snorkel"]
+    "links": [],
+    "itinerary": [],
+    "story": "",
+    "mapQuery": "",
+    "media": [
+      "/Vacations/Aulani 2024/cover.jpg",
+      "/uploads/E61C7184-18E4-4ABE-9CB9-E2B3F7F12941.jpeg",
+      "/uploads/DADD4F8A-56E6-4186-9B10-66AD5212E1A3.jpeg",
+      "/uploads/7EDA4B3F-F1AF-4CBB-A4C7-C5E87C109A69_4_5005_c.jpeg",
+      "/uploads/7F13E918-390D-4BBF-900C-A39BF91EDB80.JPG",
+      "/uploads/FBF5B3FC-B690-46CD-BDF8-266B1D87E5D9.JPG"
+    ]
   }
 ]
