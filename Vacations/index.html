@@ -4,47 +4,28 @@
   <meta charset="utf-8">
   <title>Vacations</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="vacations.css">
+  <link href="vacations.css" rel="stylesheet">
 </head>
 <body>
   <header class="v-header">
-    <div class="v-wrap">
-      <a class="v-home" href="/">← Back to site</a>
-      <h1 class="v-title">Vacations</h1>
-      <p class="v-sub">Each folder inside /Vacations is a trip</p>
-    </div>
+    <a href="/">← Back to site</a>
+    <h1>Vacations</h1>
   </header>
 
-  <main id="v-main" class="v-wrap">
-    <section id="v-list" aria-live="polite"></section>
-
+  <main class="v-wrap">
+    <section id="v-list"></section>
     <section id="v-detail" hidden>
-      <button id="v-back" class="v-btn">← All trips</button>
-      <h2 id="d-title" class="v-h2"></h2>
-      <p id="d-meta" class="v-meta"></p>
-
+      <button id="v-back">← All trips</button>
+      <h2 id="d-title"></h2>
       <div id="d-gallery" class="v-grid"></div>
     </section>
   </main>
 
-  <!-- very small lightbox -->
-  <div id="v-lightbox" class="v-lb" hidden>
-    <button id="lb-close" class="v-btn v-lb-close">✕</button>
-    <button id="lb-prev" class="v-btn v-nav">←</button>
-    <figure class="v-stage">
-      <img id="lb-img" alt="" hidden>
-      <video id="lb-video" controls playsinline hidden></video>
-      <figcaption id="lb-cap"></figcaption>
-    </figure>
-    <button id="lb-next" class="v-btn v-nav">→</button>
+  <div id="v-lightbox" hidden>
+    <button id="lb-close">✕</button>
+    <img id="lb-img" alt="">
   </div>
 
-  <footer class="v-wrap v-footer">
-    <p style="color:#64748b">Tip: just add a new folder under /Vacations and push.</p>
-  </footer>
-
-  <script src="vacations.js" defer></script>
+  <script src="vacations.js"></script>
 </body>
 </html>
