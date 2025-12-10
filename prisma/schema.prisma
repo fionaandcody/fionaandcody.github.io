@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Vacation {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique
+  title        String
+  destination  String
+  startDate    DateTime
+  endDate      DateTime
+  shortSummary String
+  description  String
+  coverImage   String
+  gallery      String   // Storing as JSON string
+  tags         String   // Storing as JSON string
+  status       String   // "draft" | "published"
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

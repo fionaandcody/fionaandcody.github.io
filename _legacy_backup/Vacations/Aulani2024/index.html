@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiona & Cody | Aulani 2024</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d4b8c7;
+            --secondary-color: #f8f5f7;
+            --accent-color: #9d7989;
+            --text-color: #4a4a4a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #f0e6f0 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .site-header {
+            background: white;
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--accent-color);
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--accent-color);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+
+        .photo-item {
+            position: relative;
+            width: 100%;
+            padding-bottom: 75%;
+            background: #f0f0f0;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .photo-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(157, 121, 137, 0.25);
+        }
+
+        .photo-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Loading animation */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+            color: var(--primary-color);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .footer-text {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            font-size: 0.875rem;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .photo-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="/home.html?auth=true" class="site-title">Fiona & Cody</a>
+            <nav class="nav-links">
+                <a href="/home.html?auth=true">Home</a>
+                <a href="/photos.html?auth=true">Photos</a>
+                <a href="/videos.html?auth=true">Videos</a>
+                <a href="/Vacations/?auth=true" class="active">Vacations</a>
+                <a href="/honeymoon.html?auth=true">Honeymoon</a>
+                <a href="/index.html">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <a href="../?auth=true" class="back-link">← Back to Vacations</a>
+        <h1>Aulani 2024</h1>
+        <div class="loading" id="loading">Loading photos...</div>
+        <div class="photo-grid" id="photoGrid"></div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">Thank you for visiting our memories website.</p>
+            <div class="footer-links">
+                <a href="/home.html?auth=true">Home</a>
+                <a href="/photos.html?auth=true">Photos</a>
+                <a href="/videos.html?auth=true">Videos</a>
+                <a href="/Vacations/?auth=true">Vacations</a>
+                <a href="/honeymoon.html?auth=true">Honeymoon</a>
+            </div>
+            <p class="copyright">&copy; 2023 Our Memories. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('auth')) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            const loading = document.getElementById('loading');
+            loading.classList.add('active');
+
+            // List all images in the directory (remove ./ from paths)
+            const images = [
+                '15C65D67-026A-4DF6-81B1-024224D094B7.JPG',
+                '476D32A1-1253-4045-9592-B5AA3DB32B57.JPG',
+                '374985EF-3B9C-4AC9-B2E6-B56EEE0F06EE.JPG',
+                '656012F2-7594-4505-BDAF-A26528C09DFD.JPG',
+                'A64E9CFE-59F1-4C3F-AAD9-73CF1CB16C70.JPG',
+                'A88E46F2-0A25-4BD6-A1DA-3E308E302830.JPG',
+                'BA81E00B-537E-4B69-8644-7EE53B3CD2BD.JPG',
+                'BA97FC10-819D-4DB3-93C1-DE6776B5C508.JPG',
+                'C5C7F703-F15A-4636-BE95-5289938107A8.JPG',
+                'DACECB87-9B4D-4266-B4EB-1AB905DF7365.JPG',
+                'E55C5316-5DE7-4ED8-9D15-EB38FBC196EA.JPG',
+                'E82B6946-AB67-4DB5-AD62-C24B5F63B340.JPG',
+                'FBF5B3FC-B690-46CD-BDF8-266B1D87E5D9.JPG'
+            ];
+
+            const photoGrid = document.getElementById('photoGrid');
+            let loadedImages = 0;
+
+            // Load images with better error handling
+            images.forEach(filename => {
+                const photoItem = document.createElement('div');
+                photoItem.className = 'photo-item';
+                photoGrid.appendChild(photoItem); // Add to grid immediately for layout
+
+                const img = new Image();
+                
+                img.onload = () => {
+                    photoItem.appendChild(img);
+                    photoItem.classList.add('loaded');
+                    loadedImages++;
+                    if (loadedImages === images.length) {
+                        loading.classList.remove('active');
+                    }
+                };
+
+                img.onerror = () => {
+                    console.error(`Failed to load image: ${filename}`);
+                    photoItem.style.display = 'none'; // Hide failed items
+                    loadedImages++;
+                    if (loadedImages === images.length) {
+                        loading.classList.remove('active');
+                    }
+                };
+
+                img.src = filename; // Set src after adding event listeners
+                img.alt = 'Aulani Vacation Photo';
+                img.loading = 'lazy';
+
+                photoItem.addEventListener('click', () => openLightbox(filename));
+            });
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+
+        function openLightbox(imageSrc) {
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
