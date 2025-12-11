@@ -13,17 +13,13 @@ This is a Next.js 14+ application built with TypeScript, Tailwind CSS, and Prism
     - Ensure `.env` exists with:
       ```
       DATABASE_URL="file:./dev.db"
-      ADMIN_PASSWORD="securepassword123"
+      ADMIN_PASSWORD="your-strong-password"
       ```
 
 3.  **Database**:
     - Run migrations:
       ```bash
       npx prisma migrate dev
-      ```
-    - Seed the database (optional, adds one vacation):
-      ```bash
-      npx prisma db seed
       ```
 
 4.  **Run Development Server**:
@@ -34,19 +30,18 @@ This is a Next.js 14+ application built with TypeScript, Tailwind CSS, and Prism
 
 ## Admin Management
 
-- **Login**: Go to [/admin/login](http://localhost:3000/admin/login).
-- **Password**: `securepassword123` (or whatever is in `.env`).
-- **Manage Vacations**: Create, edit, and publish vacations.
-- **Note**: Only "published" vacations appear on the public `/adventures` page.
+- **Login**: Go to `/admin`.
+- **Password**: Set in your `.env` file.
+- **Manage Vacations**: Create, edit, and publish vacations locally.
+- **Publishing**: Commit and push your changes (including the database) to update the live site.
 
-## Deployment to Vercel
+## Deployment
+
+This site is set up for **GitHub Pages**.
 
 1.  Push code to GitHub.
-2.  Import project in Vercel.
-3.  **Environment Variables**:
-    - Set `ADMIN_PASSWORD`.
-    - **Database Note**: Since this uses SQLite (`file:./dev.db`), data will **not persist** across Vercel deployments unless you commit the DB file (not recommended) or use a persistent storage provider.
-    - **Recommendation**: Switch to Vercel Postgres or Neon for production. Update `prisma/schema.prisma` provider to `postgresql` and `prisma.config.ts` accordingly.
+2.  Ensure you have added `NEXT_PUBLIC_ADMIN_PASSWORD` to your GitHub Repository Secrets if you want immediate admin protection on the live site (though admin features are disabled on the static site).
+3.   The GitHub Action will automatically build and deploy.
 
 ## Project Structure
 

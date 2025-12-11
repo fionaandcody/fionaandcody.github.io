@@ -1,5 +1,4 @@
 import { prisma } from '@/lib/prisma';
-import { updateVacation } from '@/app/actions';
 import VacationEditor from '../../editor/VacationEditor';
 import { notFound } from 'next/navigation';
 
@@ -21,12 +20,10 @@ export default async function EditVacationPage({ params }: { params: Promise<{ i
 
     if (!vacation) return notFound();
 
-    const updateWithId = updateVacation.bind(null, vacation.id);
-
     return (
         <div className="space-y-6">
             <h1 className="text-2xl font-serif font-bold text-stone-800">Edit: {vacation.title}</h1>
-            <VacationEditor initialData={vacation} action={updateWithId} />
+            <VacationEditor initialData={vacation} />
         </div>
     );
 }

@@ -1,19 +1,34 @@
 'use client';
 
 import { useState } from 'react';
-import { uploadFile } from '@/app/actions'; // We will assume specific import or pass as prop if needed, but direct import works in client components for server actions in Next.js
-import { X, Upload, Loader2, GripVertical } from 'lucide-react';
-import Image from 'next/image';
+import { X, Upload, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface VacationEditorProps {
-    initialData?: any; // typed as Vacation
-    action: (formData: FormData) => Promise<any>;
+    initialData?: any;
+    // No explicit action prop needed anymore, we handle internally or pass ID/Status
 }
 
-export default function VacationEditor({ initialData, action }: VacationEditorProps) {
+export default function VacationEditor({ initialData }: VacationEditorProps) {
+    const router = useRouter();
     const [isUploading, setIsUploading] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
     const [coverImage, setCoverImage] = useState(initialData?.coverImage || '');
     const [gallery, setGallery] = useState<string[]>(initialData?.gallery ? JSON.parse(initialData.gallery) : []);
+
+    const handleUpload = async (file: File) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const res = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        return data.url;
+    };
 
     // Drag & Drop handlers
     const handleDrop = async (e: React.DragEvent, type: 'cover' | 'gallery') => {
@@ -24,10 +39,7 @@ export default function VacationEditor({ initialData, action }: VacationEditorPr
         setIsUploading(true);
         try {
             for (const file of files) {
-                const formData = new FormData();
-                formData.append('file', file);
-                const url = await uploadFile(formData);
-
+                const url = await handleUpload(file);
                 if (type === 'cover') {
                     setCoverImage(url);
                 } else {
@@ -46,8 +58,49 @@ export default function VacationEditor({ initialData, action }: VacationEditorPr
         setGallery(prev => prev.filter((_, i) => i !== index));
     };
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsSaving(true);
+
+        const formData = new FormData(e.currentTarget);
+        const payload = {
+            title: formData.get('title'),
+            slug: formData.get('slug'),
+            destination: formData.get('destination'),
+            startDate: formData.get('startDate'),
+            endDate: formData.get('endDate'),
+            shortSummary: formData.get('shortSummary'),
+            description: formData.get('description'),
+            coverImage: coverImage, // State
+            gallery: JSON.stringify(gallery), // State
+            tags: formData.get('tags'),
+            status: formData.get('status'),
+            featured: formData.get('featured') === 'on',
+            id: initialData?.id, // For update
+        };
+
+        try {
+            const method = initialData ? 'PUT' : 'POST';
+            const res = await fetch('/api/vacations', {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) throw new Error('Failed to save');
+
+            router.push('/admin/vacations');
+            router.refresh();
+        } catch (error) {
+            console.error(error);
+            alert('Failed to save vacation');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     return (
-        <form action={action} className="space-y-8 max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm border">
+        <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm border">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label className="block text-sm font-medium text-stone-700 mb-1">Title</label>
@@ -92,7 +145,6 @@ export default function VacationEditor({ initialData, action }: VacationEditorPr
                             <span className="text-sm">Drag & Drop cover image here</span>
                         </div>
                     )}
-                    <input type="hidden" name="coverImage" value={coverImage} />
                 </div>
             </div>
 
@@ -127,8 +179,6 @@ export default function VacationEditor({ initialData, action }: VacationEditorPr
                         ))}
                     </div>
                 )}
-                {/* Hidden input for gallery JSON */}
-                <input type="hidden" name="gallery" value={JSON.stringify(gallery)} />
             </div>
 
             {/* Text Content */}
@@ -163,10 +213,10 @@ export default function VacationEditor({ initialData, action }: VacationEditorPr
             <div className="pt-4 border-t flex justify-end">
                 <button
                     type="submit"
-                    disabled={isUploading}
+                    disabled={isUploading || isSaving}
                     className="bg-stone-800 text-white px-6 py-2 rounded-md hover:bg-stone-700 transition-colors disabled:opacity-50"
                 >
-                    {initialData ? 'Update Vacation' : 'Create Vacation'}
+                    {isSaving ? 'Saving...' : (initialData ? 'Update Vacation' : 'Create Vacation')}
                 </button>
             </div>
         </form>

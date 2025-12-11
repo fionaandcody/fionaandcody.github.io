@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
-import { deleteVacation } from '@/app/actions';
+import DeleteButton from './_components/DeleteButton';
 
 export default async function AdminVacationsPage() {
     const vacations = await prisma.vacation.findMany({
@@ -42,9 +42,7 @@ export default async function AdminVacationsPage() {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <Link href={`/admin/vacations/${v.id}/edit`} className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</Link>
-                                    <form action={deleteVacation.bind(null, v.id)} className="inline-block">
-                                        <button type="submit" className="text-red-600 hover:text-red-900 font-medium">Delete</button>
-                                    </form>
+                                    <DeleteButton id={v.id} />
                                 </td>
                             </tr>
                         ))}
