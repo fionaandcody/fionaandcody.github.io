@@ -31,12 +31,12 @@ export default async function Home() {
           <p className="text-xl md:text-2xl font-light mb-8 max-w-2xl mx-auto drop-shadow-sm">
             Exploring the world, one adventure at a time.
           </p>
-          <Link
+          {/* <Link
             href="/our-story"
             className="inline-block bg-white/90 text-stone-900 px-8 py-3 rounded-full font-medium hover:bg-white transition-colors"
           >
             Read Our Story
-          </Link>
+          </Link> */}
         </div>
       </section>
 
