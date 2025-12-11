@@ -1,15 +1,44 @@
-export default function Wedding() {
+import { prisma } from '@/lib/prisma';
+import LightboxGallery from '@/components/gallery/LightboxGallery';
+
+interface Highlight {
+    time: string;
+    title: string;
+    description: string;
+}
+
+export default async function Wedding() {
+    const wedding = await prisma.wedding.findFirst();
+
+    // Defaults if no DB data
+    const heroImage = wedding?.heroImage || "https://github.com/fionaandcody/fionaandcody.github.io/blob/main/_legacy_backup/Wedding/WeddingSign.jpeg?raw=true";
+    const heroTitle = wedding?.heroTitle || "The Wedding Day";
+    const heroSubtitle = wedding?.heroSubtitle || "October 7, 2023 • Anaheim, CA";
+
+    const highlights: Highlight[] = wedding?.highlights
+        ? JSON.parse(wedding.highlights)
+        : [
+            { time: '4:00 PM', title: 'Ceremony', description: 'Steps of the vineyard' },
+            { time: '6:00 PM', title: 'Dinner', description: 'Family style feast' },
+            { time: '8:00 PM', title: 'Dancing', description: 'Under the stars' }
+        ];
+
+    const videoUrl = wedding?.videoUrl || "https://player.vimeo.com/video/894014279";
+
+    // Convert gallery JSON to string array
+    const galleryImages: string[] = wedding?.gallery ? JSON.parse(wedding.gallery) : [];
+
     return (
         <div className="pb-20">
             {/* Hero */}
             <div className="relative h-[60vh] flex items-center justify-center">
                 <div className="absolute inset-0">
-                    <img src="https://github.com/fionaandcody/fionaandcody.github.io/blob/main/_legacy_backup/Wedding/WeddingSign.jpeg?raw=true" className="w-full h-full object-cover" alt="Wedding Hero" />
+                    <img src={heroImage} className="w-full h-full object-cover" alt="Wedding Hero" />
                     <div className="absolute inset-0 bg-black/40" />
                 </div>
                 <div className="relative z-10 text-center text-white px-4">
-                    <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4">The Wedding Day</h1>
-                    <p className="text-xl tracking-widest uppercase">October 7, 2023 • Anaheim, CA</p>
+                    <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4">{heroTitle}</h1>
+                    <p className="text-xl tracking-widest uppercase">{heroSubtitle}</p>
                 </div>
             </div>
 
@@ -18,21 +47,13 @@ export default function Wedding() {
                 <div className="container mx-auto px-4 max-w-4xl text-center">
                     <h2 className="text-3xl font-serif mb-12 text-stone-800">Highlights</h2>
                     <div className="grid md:grid-cols-3 gap-8">
-                        <div className="p-6 bg-white rounded-lg shadow-sm">
-                            <span className="block text-2xl font-bold text-stone-900 mb-2">4:00 PM</span>
-                            <h3 className="text-lg font-serif">Ceremony</h3>
-                            <p className="text-stone-500 text-sm mt-2">Steps of the vineyard</p>
-                        </div>
-                        <div className="p-6 bg-white rounded-lg shadow-sm">
-                            <span className="block text-2xl font-bold text-stone-900 mb-2">6:00 PM</span>
-                            <h3 className="text-lg font-serif">Dinner</h3>
-                            <p className="text-stone-500 text-sm mt-2">Family style feast</p>
-                        </div>
-                        <div className="p-6 bg-white rounded-lg shadow-sm">
-                            <span className="block text-2xl font-bold text-stone-900 mb-2">8:00 PM</span>
-                            <h3 className="text-lg font-serif">Dancing</h3>
-                            <p className="text-stone-500 text-sm mt-2">Under the stars</p>
-                        </div>
+                        {highlights.map((h, i) => (
+                            <div key={i} className="p-6 bg-white rounded-lg shadow-sm">
+                                <span className="block text-2xl font-bold text-stone-900 mb-2">{h.time}</span>
+                                <h3 className="text-lg font-serif">{h.title}</h3>
+                                <p className="text-stone-500 text-sm mt-2">{h.description}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -43,7 +64,7 @@ export default function Wedding() {
                 <div className="aspect-video bg-stone-200 rounded-xl overflow-hidden shadow-lg">
                     <iframe
                         className="w-full h-full"
-                        src="https://player.vimeo.com/video/894014279"
+                        src={videoUrl}
                         title="Wedding Video"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -55,18 +76,16 @@ export default function Wedding() {
             {/* Gallery */}
             <section className="py-20 bg-white">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-serif mb-12 text-center text-stone-800">Gallery</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                            <div key={n} className="aspect-square bg-stone-200 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
-                                <img
-                                    src={`https://images.unsplash.com/photo-${1515934751635 + n}?q=80&w=800&auto=format&fit=crop`}
-                                    alt="Wedding"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                        ))}
+                    <div className="flex justify-center mb-12 relative">
+                        <h2 className="text-3xl font-serif text-stone-800">Gallery</h2>
+                        {/* Note: LightboxGallery handles view toggles internally */}
                     </div>
+
+                    {galleryImages.length > 0 ? (
+                        <LightboxGallery images={galleryImages} />
+                    ) : (
+                        <p className="text-center text-stone-500 italic">Gallery coming soon...</p>
+                    )}
                 </div>
             </section>
         </div>

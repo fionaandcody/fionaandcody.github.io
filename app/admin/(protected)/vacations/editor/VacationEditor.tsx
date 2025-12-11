@@ -87,13 +87,16 @@ export default function VacationEditor({ initialData }: VacationEditorProps) {
                 body: JSON.stringify(payload)
             });
 
-            if (!res.ok) throw new Error('Failed to save');
+            if (!res.ok) {
+                const errData = await res.json();
+                throw new Error(errData.error || 'Failed to save');
+            }
 
             router.push('/admin/vacations');
             router.refresh();
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert('Failed to save vacation');
+            alert(`Error: ${error.message}`);
         } finally {
             setIsSaving(false);
         }
