@@ -6,6 +6,11 @@ export default function Footer() {
                 <p className="text-stone-500 text-sm">
                     &copy; {new Date().getFullYear()} Our Journey. All rights reserved.
                 </p>
+                <div className="mt-4">
+                    <a href="/admin/login" className="text-xs text-stone-300 hover:text-stone-500 transition-colors">
+                        Admin Login
+                    </a>
+                </div>
             </div>
         </footer>
     );

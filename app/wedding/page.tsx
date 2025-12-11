@@ -4,7 +4,7 @@ export default function Wedding() {
             {/* Hero */}
             <div className="relative h-[60vh] flex items-center justify-center">
                 <div className="absolute inset-0">
-                    <img src="https://www.fionaandcody.com/Wedding/Front.jpeg" className="w-full h-full object-cover" alt="Wedding Hero" />
+                    <img src="https://github.com/fionaandcody/fionaandcody.github.io/blob/main/_legacy_backup/Wedding/WeddingSign.jpeg?raw=true" className="w-full h-full object-cover" alt="Wedding Hero" />
                     <div className="absolute inset-0 bg-black/40" />
                 </div>
                 <div className="relative z-10 text-center text-white px-4">

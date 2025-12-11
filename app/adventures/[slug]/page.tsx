@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import LightboxGallery from '@/components/gallery/LightboxGallery';
 
 export async function generateStaticParams() {
     const vacations = await prisma.vacation.findMany({
@@ -72,13 +73,7 @@ export default async function AdventureDetailPage({ params }: { params: Promise<
                 {gallery.length > 0 && (
                     <div className="space-y-8">
                         <h2 className="text-3xl font-serif text-stone-800 text-center">Gallery</h2>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            {gallery.map((url: string, idx: number) => (
-                                <div key={idx} className={`rounded-lg overflow-hidden bg-stone-100 ${idx % 3 === 0 ? 'md:col-span-2 aspect-[2/1]' : 'aspect-square'}`}>
-                                    <img src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-                                </div>
-                            ))}
-                        </div>
+                        <LightboxGallery images={gallery} />
                     </div>
                 )}
             </div>

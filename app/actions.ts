@@ -3,6 +3,31 @@
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
+
+export async function uploadFile(formData: FormData) {
+    const file = formData.get('file') as File;
+    if (!file) {
+        throw new Error('No file uploaded');
+    }
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Create unique filename
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const filename = uniqueSuffix + '-' + file.name.replace(/[^a-zA-Z0-9.-]/g, '');
+
+    // Ensure directory exists
+    const uploadDir = join(process.cwd(), 'public', 'images', 'uploads');
+    await mkdir(uploadDir, { recursive: true });
+
+    const path = join(uploadDir, filename);
+    await writeFile(path, buffer);
+
+    return `/images/uploads/${filename}`;
+}
 
 export async function createVacation(formData: FormData) {
     const title = formData.get('title') as string;

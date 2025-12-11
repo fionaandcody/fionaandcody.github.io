@@ -30,6 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: "file:./dev.db"
+      NEXT_PUBLIC_ADMIN_PASSWORD: "LevelOne1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4

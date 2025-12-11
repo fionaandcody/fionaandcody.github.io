@@ -12,22 +12,17 @@ export default function AdminLogin() {
         e.preventDefault();
         setError('');
 
-        try {
-            const res = await fetch('/api/auth', {
-                // Actually next.js routing: app/api/auth/route.ts -> /api/auth
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ password }),
-            });
+        const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
-            if (res.ok) {
-                router.push('/admin');
-                router.refresh();
-            } else {
-                setError('Invalid password');
-            }
-        } catch (err) {
-            setError('An error occurred');
+        if (password === adminPassword) {
+            localStorage.setItem('admin_session', 'true');
+            // Force a hard navigation to ensure state is picked up if we rely on it elsewhere, 
+            // but router.push is fine if components listen to storage or mount.
+            // However, our protected layout isn't implemented yet. 
+            // We will assume components check localStorage on mount.
+            router.push('/admin');
+        } else {
+            setError('Invalid password');
         }
     };
 
