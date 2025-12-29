@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import LightboxGallery from '@/components/gallery/LightboxGallery';
+import Image from 'next/image';
 
 interface Highlight {
     time: string;
@@ -11,7 +12,7 @@ export default async function Wedding() {
     const wedding = await prisma.wedding.findFirst();
 
     // Defaults if no DB data
-    const heroImage = wedding?.heroImage || "https://github.com/fionaandcody/fionaandcody.github.io/blob/main/_legacy_backup/Wedding/WeddingSign.jpeg?raw=true";
+    const heroImage = wedding?.heroImage || "/images/site/wedding-hero.jpg";
     const heroTitle = wedding?.heroTitle || "The Wedding Day";
     const heroSubtitle = wedding?.heroSubtitle || "October 7, 2023 • Anaheim, CA";
 
@@ -33,7 +34,13 @@ export default async function Wedding() {
             {/* Hero */}
             <div className="relative h-[60vh] flex items-center justify-center">
                 <div className="absolute inset-0">
-                    <img src={heroImage} className="w-full h-full object-cover" alt="Wedding Hero" />
+                    <Image
+                        src={heroImage}
+                        alt="Wedding Hero"
+                        fill
+                        className="object-cover"
+                        priority
+                    />
                     <div className="absolute inset-0 bg-black/40" />
                 </div>
                 <div className="relative z-10 text-center text-white px-4">
